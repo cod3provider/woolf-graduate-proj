@@ -10,15 +10,6 @@
   padding: 0 16px;
   z-index: 100;
 
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(50px) saturate(250%);
-  -webkit-backdrop-filter: blur(50px) saturate(250%);
-
-  transition: backdrop-filter 0.3s ease,
-  background-color 0.3s ease,
-  box-shadow 0.3s ease;
-
-
   @media (768px <= width) {
     left: 50%;
     transform: translate(-50%);
@@ -32,6 +23,8 @@
   &::before {
     content: "";
     position: absolute;
+    width: 100%;
+    height: 2px;
     inset: 0;
     background: linear-gradient(
         to bottom,
@@ -99,13 +92,15 @@
   transition: color 0.3s;
 
   &:hover {
-    color: #52589f;
+    color: #20266a;
   }
 }
 
 .active {
+  color: #52589f;
+
   &:hover::after {
-    background: #52589f;;
+    background: #52589f;
   }
 
   &::after {
@@ -115,8 +110,16 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(rgba(44, 48, 55, 0.91));
+    background-color: #52589f;
     border-radius: 2px;
     transition: all 0.3s ease;
   }
+}
+
+.wrapLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
 }

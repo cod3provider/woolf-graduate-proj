@@ -1,0 +1,11 @@
+.logoWrapper {
+  /*width: 24px;*/
+  /*height: 24px;*/
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.iconWrap {
+  display: flex;
+
+}
