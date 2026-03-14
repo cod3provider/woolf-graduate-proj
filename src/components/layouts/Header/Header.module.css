@@ -1,0 +1,122 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 100;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(50px) saturate(250%);
+  -webkit-backdrop-filter: blur(50px) saturate(250%);
+
+  transition: backdrop-filter 0.3s ease,
+  background-color 0.3s ease,
+  box-shadow 0.3s ease;
+
+
+  @media (768px <= width) {
+    left: 50%;
+    transform: translate(-50%);
+    top: 10px;
+    width: 80%;
+    max-width: 1280px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    border-radius: 25px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0)
+    );
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(80, 80, 80, 0.12),
+        rgba(80, 80, 80, 0)
+    );
+    pointer-events: none;
+  }
+}
+
+.headerContainer {
+  margin: 0 auto;
+  padding: 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
+  width: 100%;
+
+  @media (width <= 768px) {
+    justify-content: space-between;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.navList {
+  display: flex;
+  gap: 16px;
+}
+
+.navItem {
+  position: relative;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+
+  color: #535bf2;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #52589f;
+  }
+}
+
+.active {
+  &:hover::after {
+    background: #52589f;;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(rgba(44, 48, 55, 0.91));
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+}

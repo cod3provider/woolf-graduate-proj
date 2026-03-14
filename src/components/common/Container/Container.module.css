@@ -1,0 +1,28 @@
+.container {
+  margin: 0 auto;
+  padding: 8px 16px;
+  width: 100%;
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-direction: column;
+  overflow: hidden;
+
+  @media (320px <= width < 768px) {
+      padding-left: 32px;
+      padding-right: 32px;
+  }
+
+  @media (768px <= width) {
+    padding: 24px 40px;
+  }
+
+  @media (768px <= width <= 1280px) {
+    max-width: 960px;
+  }
+
+  max-width: 1440px;
+}
