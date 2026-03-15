@@ -1,0 +1,13 @@
+.loginBtn {
+  padding: 8px 20px;
+  width: 90px;
+  height: 44px;
+  background: rgba(244, 175, 37, 0.1);
+  border: 2px solid rgba(244, 175, 37, 0.2);
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #f4af25;
+}

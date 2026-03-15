@@ -1,6 +1,8 @@
+import cl from "./LoginButton.module.css";
+
 const LoginButton = () => {
   return (
-    <button>Login</button>
+    <button className={cl.loginBtn}>Login</button>
   )
 }
 

@@ -1,7 +1,7 @@
 .container {
   margin: 0 auto;
   padding: 8px 16px;
-  width: 100%;
+  /*width: 100%;*/
 
 
   display: flex;
@@ -10,10 +10,12 @@
   gap: 16px;
   flex-direction: column;
   overflow: hidden;
+  max-width: 640px;
+
 
   @media (320px <= width < 768px) {
-      padding-left: 32px;
-      padding-right: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   @media (768px <= width) {
@@ -24,5 +26,7 @@
     max-width: 960px;
   }
 
-  max-width: 1440px;
+    @media (1280px <= width) {
+      max-width: 1440px;
+    }
 }

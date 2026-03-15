@@ -10,7 +10,7 @@ const Logo = () => {
     <div className={cl.logoWrapper}>
       <NavLink className={({isActive}) =>
         `${cl.link} ${isActive ? cl.active : ''}`
-      } to="/blog">
+      } to="/">
         <div className={cl.iconWrap}>
           <IconLogo />
         </div>

@@ -1,4 +1,17 @@
+@font-face {
+  font-family: "Space Grotesk";
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-display: swap;
+  font-weight: 300 700;
+  font-style: normal;
+}
+
 :root {
+  font-family: "Space Grotesk", sans-serif;
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
@@ -52,10 +65,12 @@
 
 body {
   margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  background-color: #F8F7F5;
 }
 
 #root {
-  width: 1126px;
+  /*width: 1126px;*/
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -174,6 +189,7 @@ h4 {
 
 a {
   text-decoration: none;
+  font-family: inherit;
 }
 
 ul {
