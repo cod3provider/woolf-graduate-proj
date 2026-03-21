@@ -1,0 +1,292 @@
+.quizSection {
+  background: #ffffff;
+  border: 1px solid #ece8df;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.sectionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid #f4af25;
+  background: #fff7e7;
+  color: #f4af25;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.sectionText {
+  margin: 0 0 24px;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.tasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.taskCard {
+  background: #f8fafc;
+  border: 1px solid #e7edf5;
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.taskHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.taskNumber {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff7e7;
+  color: #f4af25;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.taskTitle {
+  margin: 0;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.codeWrap {
+  overflow: hidden;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e7edf5;
+  margin-bottom: 20px;
+}
+
+.codeWrap pre {
+  margin: 0 !important;
+  white-space: pre-wrap !important;
+  overflow-x: auto !important;
+}
+
+.codeWrap code {
+  white-space: pre-wrap !important;
+  display: block !important;
+  font-family: Consolas, "Courier New", monospace !important;
+}
+
+.question {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.optionsList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.optionBtn {
+  width: 100%;
+  text-align: left;
+  border: 1px solid #dbe4ef;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: 0.2s ease;
+}
+
+.optionBtn:hover {
+  border-color: #f4af25;
+  transform: translateY(-1px);
+}
+
+.optionLetter {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef4fb;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.optionCode {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #334155;
+  word-break: break-word;
+}
+
+.selectedOption {
+  border-color: #f4af25;
+  background: #fffaf0;
+}
+
+.correctOption {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.wrongOption {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.taskFooter {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.checkBtn {
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 999px;
+  background: #f4af25;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.feedbackCorrect {
+  color: #16a34a;
+}
+
+.feedbackWrong {
+  color: #dc2626;
+}
+
+@media (max-width: 1199px) {
+  .quizSection {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .sectionTitle {
+    font-size: 24px;
+  }
+
+  .sectionText {
+    font-size: 15px;
+  }
+
+  .taskCard {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .taskTitle {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 767px) {
+  .quizSection {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .sectionBadge {
+    min-height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+  }
+
+  .sectionText {
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+
+  .taskCard {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .taskHeader {
+    margin-bottom: 14px;
+  }
+
+  .taskNumber {
+    width: 32px;
+    height: 32px;
+  }
+
+  .taskTitle {
+    font-size: 18px;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .optionBtn {
+    padding: 12px 14px;
+    border-radius: 16px;
+    align-items: flex-start;
+  }
+
+  .optionCode {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .checkBtn {
+    height: 42px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .taskFooter {
+    align-items: stretch;
+  }
+}

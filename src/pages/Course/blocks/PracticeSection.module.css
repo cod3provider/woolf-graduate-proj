@@ -1,0 +1,25 @@
+.practiceSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.practiceInner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 1199px) {
+  .practiceSection,
+  .practiceInner {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .practiceSection,
+  .practiceInner {
+    gap: 18px;
+  }
+}

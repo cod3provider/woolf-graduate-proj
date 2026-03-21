@@ -1,0 +1,190 @@
+.imageBlock {
+  background: #ffffff;
+  border: 1px solid #ece8df;
+  border-radius: 28px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.lessonImage {
+  display: block;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.lessonHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.lessonHeader > :first-child {
+  min-width: 0;
+}
+
+.lessonText {
+  margin: 0;
+  max-width: 760px;
+  color: #5b667a;
+  line-height: 1.7;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.iconButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.iconBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardsRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.infoCard {
+  background: #f3f7fd;
+  border-radius: 24px;
+  padding: 24px;
+  min-width: 0;
+}
+
+.cardIcon {
+  font-size: 22px;
+  color: #f4af25;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #0f172a;
+}
+
+.cardText {
+  margin: 0 0 16px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.cardLink {
+  color: #f4af25;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 1199px) {
+  .imageBlock {
+    padding: 14px;
+    border-radius: 24px;
+    margin-bottom: 20px;
+  }
+
+  .lessonImage {
+    height: 320px;
+    border-radius: 18px;
+  }
+
+  .lessonText {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .iconBtn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cardsRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .infoCard {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+  }
+
+  .cardText {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 767px) {
+  .imageBlock {
+    padding: 12px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+
+  .lessonImage {
+    height: 220px;
+    border-radius: 16px;
+  }
+
+  .lessonHeader {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .iconButtons {
+    gap: 10px;
+  }
+
+  .iconBtn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .lessonText {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cardsRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .infoCard {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+  }
+
+  .cardText {
+    font-size: 13px;
+  }
+}
