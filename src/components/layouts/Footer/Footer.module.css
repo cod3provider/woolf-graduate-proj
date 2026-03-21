@@ -1,0 +1,37 @@
+footer {
+  width: 100%;
+  background-color: #FFFFFF;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  @media (900px <= width) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.footerLinksList {
+  display: flex;
+  gap: 24px;
+}
+
+.footerLink {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  color: #64748b;
+}
+
+.copyright {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  color: #94a3b8;
+}
