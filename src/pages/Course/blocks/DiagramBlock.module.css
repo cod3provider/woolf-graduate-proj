@@ -1,0 +1,45 @@
+.diagramBlock {
+  background: #ffffff;
+  border: 1px solid #ece8df;
+  border-radius: 28px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diagramImage {
+  display: block;
+  width: min(100%, 920px);
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+@media (max-width: 1199px) {
+  .diagramBlock {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .diagramImage {
+    width: min(100%, 760px);
+    max-height: 420px;
+  }
+}
+
+@media (max-width: 767px) {
+  .diagramBlock {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .diagramImage {
+    width: 100%;
+    max-height: 280px;
+  }
+}
