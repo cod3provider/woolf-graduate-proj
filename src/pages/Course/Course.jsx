@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 import CourseSidebar from "./components/CourseSidebar";
 import CourseTopBar from "./components/CourseTopBar";
@@ -24,6 +25,8 @@ const Course = () => {
   // TEMPORARY DEMO FLAG
   // Later replace with real user plan from backend / Firestore
   const hasProAccess = false;
+
+  const { user, loading, openAuthModal } = useAuth();
 
   const baseLessons = useMemo(() => {
     return lessonsData.map((lesson) => {
@@ -89,6 +92,13 @@ const Course = () => {
       navigate(`/course/${activeLesson.slug}`, { replace: true });
     }
   }, [lessonSlug, requestedLesson, activeLesson.slug, navigate]);
+
+  useEffect(() => {
+  if (!loading && !user) {
+    openAuthModal(lessonSlug ? `/course/${lessonSlug}` : "/course/closure");
+    navigate("/", { replace: true });
+  }
+}, [user, loading, lessonSlug, navigate, openAuthModal]);
 
   useEffect(() => {
     setIsSidebarOpen(false);

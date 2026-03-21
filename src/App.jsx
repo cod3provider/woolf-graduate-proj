@@ -11,13 +11,11 @@ function App() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {isCoursePage ? (
-        <Outlet />
-      ) : (
+      {
         <SharedLayout>
           <Outlet />
         </SharedLayout>
-      )}
+      }
 
       <AuthModal />
     </Suspense>

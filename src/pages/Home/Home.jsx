@@ -7,12 +7,19 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import cl from "./Home.module.css";
 
 const Home = () => {
-  const { user } = useAuth();
+  const { user, openAuthModal } = useAuth();
 
   const userName =
     user?.displayName?.split(" ")[0] ||
     user?.email?.split("@")[0] ||
     "friend";
+
+  const handleProtectedLinkClick = (e, path) => {
+    if (!user) {
+      e.preventDefault();
+      openAuthModal(path);
+    }
+  };
 
   return (
     <Container>
@@ -43,14 +50,22 @@ const Home = () => {
 
           <ul className={cl.linksList}>
             <li className={cl.listItem}>
-              <Link to="/course/closure" className={`${cl.startBtn} ${cl.btn}`}>
+              <Link
+                to="/course/closure"
+                className={`${cl.startBtn} ${cl.btn}`}
+                onClick={(e) => handleProtectedLinkClick(e, "/course/closure")}
+              >
                 <span>Start Free Lessons</span>
                 <FaArrowRight />
               </Link>
             </li>
 
             <li className={cl.listItem}>
-              <Link to="/course" className={`${cl.demoBtn} ${cl.btn}`}>
+              <Link
+                to="/course"
+                className={`${cl.demoBtn} ${cl.btn}`}
+                onClick={(e) => handleProtectedLinkClick(e, "/course")}
+              >
                 Open Course
               </Link>
             </li>
