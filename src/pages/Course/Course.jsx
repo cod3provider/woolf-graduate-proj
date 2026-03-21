@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
@@ -21,24 +21,37 @@ const Course = () => {
 
   const { completedLessonIds, highestUnlockedLessonId } = progress;
 
-  const baseLessons = lessonsData.map((lesson) => {
-    let status = "locked";
+  // TEMPORARY DEMO FLAG
+  // Later replace with real user plan from backend / Firestore
+  const hasProAccess = false;
 
-    if (completedLessonIds.includes(lesson.id)) {
-      status = "passed";
-    } else if (lesson.id <= highestUnlockedLessonId) {
-      status = "available";
-    }
+  const baseLessons = useMemo(() => {
+    return lessonsData.map((lesson) => {
+      const isLockedByAccess = !lesson.isFree && !hasProAccess;
 
-    return {
-      ...lesson,
-      status,
-    };
-  });
+      let status = "locked";
+
+      if (completedLessonIds.includes(lesson.id)) {
+        status = "passed";
+      } else if (!isLockedByAccess && lesson.id <= highestUnlockedLessonId) {
+        status = "available";
+      }
+
+      return {
+        ...lesson,
+        status,
+      };
+    });
+  }, [completedLessonIds, highestUnlockedLessonId, hasProAccess]);
+
+  const accessibleLessons = baseLessons.filter(
+    (lesson) => lesson.status !== "locked"
+  );
 
   const firstOpenLesson =
-    baseLessons.find((lesson) => lesson.status === "available") ||
-    baseLessons[baseLessons.length - 1];
+    accessibleLessons.find((lesson) => lesson.status === "available") ||
+    accessibleLessons[accessibleLessons.length - 1] ||
+    baseLessons[0];
 
   const requestedLesson = baseLessons.find(
     (lesson) => lesson.slug === lessonSlug
@@ -58,9 +71,16 @@ const Course = () => {
     (lesson) => lesson.id === activeLesson.id
   );
 
-  const previousLesson = lessons[activeLessonIndex - 1];
-  const nextLesson = lessons[activeLessonIndex + 1];
-  const isLastLesson = activeLessonIndex === lessons.length - 1;
+  const nextAccessibleLesson = lessons
+    .slice(activeLessonIndex + 1)
+    .find((lesson) => lesson.status !== "locked");
+
+  const previousAccessibleLesson = [...lessons]
+    .slice(0, activeLessonIndex)
+    .reverse()
+    .find((lesson) => lesson.status !== "locked");
+
+  const isLastAccessibleLesson = !nextAccessibleLesson;
 
   const ActiveLessonComponent = activeLesson.component;
 
@@ -85,23 +105,23 @@ const Course = () => {
   };
 
   const handlePreviousLesson = () => {
-    if (!previousLesson) return;
-    navigate(`/course/${previousLesson.slug}`);
+    if (!previousAccessibleLesson) return;
+    navigate(`/course/${previousAccessibleLesson.slug}`);
   };
 
   const handleCompleteAndNext = () => {
     completeLesson(activeLesson.id);
 
-    if (!nextLesson) {
+    if (!nextAccessibleLesson) {
       return;
     }
 
-    navigate(`/course/${nextLesson.slug}`);
+    navigate(`/course/${nextAccessibleLesson.slug}`);
   };
 
   const handleResetProgress = () => {
     resetProgress();
-    navigate("/course/decorator");
+    navigate("/course/closure");
   };
 
   return (
@@ -116,6 +136,7 @@ const Course = () => {
         setIsSidebarOpen={setIsSidebarOpen}
         lessons={lessons}
         onLessonSelect={handleLessonSelect}
+        hasProAccess={hasProAccess}
       />
 
       <div className={cl.content}>
@@ -132,7 +153,7 @@ const Course = () => {
             type="button"
             className={cl.prevBtn}
             onClick={handlePreviousLesson}
-            disabled={!previousLesson}
+            disabled={!previousAccessibleLesson}
           >
             <FaArrowLeft />
             <span>Previous</span>
@@ -143,8 +164,10 @@ const Course = () => {
             className={cl.nextBtn}
             onClick={handleCompleteAndNext}
           >
-            <span>{isLastLesson ? "Mark as Completed" : "Complete & Next"}</span>
-            {!isLastLesson && <FaArrowRight />}
+            <span>
+              {isLastAccessibleLesson ? "Mark as Completed" : "Complete & Next"}
+            </span>
+            {!isLastAccessibleLesson && <FaArrowRight />}
           </button>
         </div>
 
