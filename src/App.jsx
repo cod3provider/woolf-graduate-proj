@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import "./App.css";
 import SharedLayout from "./components/common/SharedLayout/SharedLayout.jsx";
+import AuthModal from "./components/auth/AuthModal/AuthModal.jsx";
 
 function App() {
   const location = useLocation();
@@ -17,6 +18,8 @@ function App() {
           <Outlet />
         </SharedLayout>
       )}
+
+      <AuthModal />
     </Suspense>
   );
 }
