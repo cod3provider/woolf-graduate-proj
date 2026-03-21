@@ -10,4 +10,12 @@
   line-height: 150%;
   text-align: center;
   color: #f4af25;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.loginBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(244, 175, 37, 0.14);
+  background: rgba(244, 175, 37, 0.16);
 }

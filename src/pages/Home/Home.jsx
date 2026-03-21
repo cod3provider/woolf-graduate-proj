@@ -1,35 +1,58 @@
-import { FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaArrowRight, FaLock } from "react-icons/fa";
 
 import Container from "@components/common/Container/Container.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 import cl from "./Home.module.css";
 
 const Home = () => {
+  const { user } = useAuth();
+
+  const userName =
+    user?.displayName?.split(" ")[0] ||
+    user?.email?.split("@")[0] ||
+    "friend";
+
   return (
-      <Container>
+    <Container>
+      <section className={cl.heroSection}>
         <div className={cl.textContainer}>
+          {user && (
+            <p className={cl.welcomeBadge}>
+              Welcome back, {userName}
+            </p>
+          )}
+
           <h1 className={cl.title}>
-            Master <span className={cl.titleSpan}>Coding</span>
-            Through Play
+            Learn Python in <span className={cl.titleSpan}>small steps</span>
           </h1>
 
           <p className={cl.subtitle}>
-            Experience a tactile and engaging way
-            to learn programming. Swap blocks, snap
-            logic together, and watch your code
-            come to life with our friendly characters.
+            Short lessons, simple metaphors, and practical tasks to help you
+            understand tricky Python topics and prepare for junior interviews.
           </p>
+
+          <div className={cl.lessonAccess}>
+            <span className={cl.freeTag}>3 free lessons</span>
+            <span className={cl.lockedTag}>
+              <FaLock />
+              2 locked lessons
+            </span>
+          </div>
 
           <ul className={cl.linksList}>
             <li className={cl.listItem}>
-              <a href="" className={`${cl.startBtn} ${cl.btn}`}>
-                <span>Get Started</span>
-                <FaArrowRight/>
-              </a>
+              <Link to="/course/closure" className={`${cl.startBtn} ${cl.btn}`}>
+                <span>Start Free Lessons</span>
+                <FaArrowRight />
+              </Link>
             </li>
 
             <li className={cl.listItem}>
-              <a href="" className={`${cl.demoBtn} ${cl.btn}`}>View Demo</a>
+              <Link to="/course" className={`${cl.demoBtn} ${cl.btn}`}>
+                Open Course
+              </Link>
             </li>
           </ul>
         </div>
@@ -52,36 +75,50 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        
-        <div>
-          <h2>Choose Your Learning Path</h2>
+      </section>
 
-          <ul>
-            <li>
-              <div className={cl.iconBackground}></div>
-              <h3>Block Coding</h3>
-              <p>Drag and drop colorful snippets
-                to build your first game. Perfect
-                for beginners.</p>
-            </li>
-            <li>
-              <div className={cl.iconBackground}></div>
-              <h3>Web Magic</h3>
-              <p>Learn the spells of HTML and CSS
-                to create beautiful websites from
-                scratch.</p>
-            </li>
-            <li>
-              <div className={cl.iconBackground}></div>
-              <h3>Python Pals</h3>
-              <p>Talk to machines with Python.
-                Simple syntax, powerful
-                possibilities.</p>
-            </li>
-          </ul>
-        </div>
-      </Container>
-  )
-}
+      <section className={cl.infoSection}>
+        <h2 className={cl.sectionTitle}>How to use the app</h2>
+
+        <ul className={cl.cardsList}>
+          <li className={cl.card}>
+            <div className={cl.iconBackground}></div>
+            <h3 className={cl.cardTitle}>Read</h3>
+            <p className={cl.cardText}>
+              Start with a short lesson focused on one Python concept at a time.
+            </p>
+          </li>
+
+          <li className={cl.card}>
+            <div className={cl.iconBackground}></div>
+            <h3 className={cl.cardTitle}>Practice</h3>
+            <p className={cl.cardText}>
+              Complete quick tasks right after the explanation to consolidate the topic.
+            </p>
+          </li>
+
+          <li className={cl.card}>
+            <div className={cl.iconBackground}></div>
+            <h3 className={cl.cardTitle}>Progress</h3>
+            <p className={cl.cardText}>
+              Move lesson by lesson and build confidence for junior-level questions.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section className={cl.infoSection}>
+        <h2 className={cl.sectionTitle}>What makes it useful</h2>
+
+        <ul className={cl.featureList}>
+          <li className={cl.featureItem}>Short lessons instead of overload</li>
+          <li className={cl.featureItem}>Metaphors for difficult topics</li>
+          <li className={cl.featureItem}>Practice that matches the theory</li>
+          <li className={cl.featureItem}>Focus on junior Python interview topics</li>
+        </ul>
+      </section>
+    </Container>
+  );
+};
 
 export default Home;
