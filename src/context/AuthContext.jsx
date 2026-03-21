@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [redirectPath, setRedirectPath] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -22,13 +23,30 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const openAuthModal = () => setIsAuthModalOpen(true);
-  const closeAuthModal = () => setIsAuthModalOpen(false);
+  const openAuthModal = (path = null) => {
+    if (path) {
+      setRedirectPath(path);
+    }
+    setIsAuthModalOpen(true);
+  };
+
+  const closeAuthModal = () => {
+    setIsAuthModalOpen(false);
+    setRedirectPath(null);
+  };
 
   const signInWithGoogle = async () => {
     try {
+      const targetPath = redirectPath;
+
       await signInWithPopup(auth, googleProvider);
-      closeAuthModal();
+
+      setIsAuthModalOpen(false);
+      setRedirectPath(null);
+
+      if (targetPath) {
+        window.location.assign(targetPath);
+      }
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
