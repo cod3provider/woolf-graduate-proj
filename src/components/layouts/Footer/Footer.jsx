@@ -1,7 +1,11 @@
+import Container from "@components/common/Container/Container.jsx";
+
 const Footer = () => {
   return (
     <footer>
-      <p>footer</p>
+      <Container>
+        <p>footer</p>
+      </Container>
     </footer>
   )
 }

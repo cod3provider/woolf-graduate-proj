@@ -12,13 +12,6 @@ function App({ children }) {
           <Outlet />
         </SharedLayout>
         {children}
-        {/*<nav>*/}
-        {/*  <Link to="/">Home</Link>*/}
-        {/*  <Link to="/about">About</Link>*/}
-        {/*</nav>*/}
-        {/*<main>*/}
-        {/*  <Outlet/>*/}
-        {/*</main>*/}
       </Suspense>
   )
 }
