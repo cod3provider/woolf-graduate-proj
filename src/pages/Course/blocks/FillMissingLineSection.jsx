@@ -1,0 +1,138 @@
+import { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+import cl from "./FillMissingLineSection.module.css";
+
+const FillMissingLineSection = ({
+  badge = "Practice",
+  title = "Fill the missing line",
+  description = "Look at the code and choose the line that completes it correctly.",
+  tasks = [],
+}) => {
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [checkedAnswers, setCheckedAnswers] = useState({});
+
+  const handleSelect = (taskId, optionKey) => {
+    setSelectedAnswers((prev) => ({
+      ...prev,
+      [taskId]: optionKey,
+    }));
+  };
+
+  const handleCheck = (taskId) => {
+    if (!selectedAnswers[taskId]) return;
+
+    setCheckedAnswers((prev) => ({
+      ...prev,
+      [taskId]: true,
+    }));
+  };
+
+  if (!tasks.length) return null;
+
+  return (
+    <section className={cl.quizSection}>
+      <span className={cl.sectionBadge}>{badge}</span>
+      <h2 className={cl.sectionTitle}>{title}</h2>
+      <p className={cl.sectionText}>{description}</p>
+
+      <div className={cl.tasksList}>
+        {tasks.map((task) => {
+          const selected = selectedAnswers[task.id];
+          const checked = checkedAnswers[task.id];
+          const isCorrect = selected === task.correct;
+
+          return (
+            <article key={task.id} className={cl.taskCard}>
+              <div className={cl.taskHeader}>
+                <span className={cl.taskNumber}>{task.id}</span>
+                <h3 className={cl.taskTitle}>Missing line #{task.id}</h3>
+              </div>
+
+              <div className={cl.codeWrap}>
+                <SyntaxHighlighter
+                  language="python"
+                  style={oneLight}
+                  PreTag="div"
+                  wrapLongLines={true}
+                  showLineNumbers={false}
+                  customStyle={{
+                    margin: 0,
+                    padding: "18px 20px",
+                    background: "transparent",
+                    fontSize: "14px",
+                    lineHeight: "1.7",
+                    whiteSpace: "pre-wrap",
+                    overflowX: "auto",
+                    borderRadius: "18px",
+                  }}
+                  codeTagProps={{
+                    style: {
+                      fontFamily: 'Consolas, "Courier New", monospace',
+                      whiteSpace: "pre-wrap",
+                      display: "block",
+                    },
+                  }}
+                >
+                  {task.code}
+                </SyntaxHighlighter>
+              </div>
+
+              <p className={cl.question}>{task.question}</p>
+
+              <div className={cl.optionsList}>
+                {Object.entries(task.options).map(([key, value]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    className={`${cl.optionBtn} ${
+                      selected === key ? cl.selectedOption : ""
+                    } ${
+                      checked && key === task.correct ? cl.correctOption : ""
+                    } ${
+                      checked &&
+                      selected === key &&
+                      selected !== task.correct
+                        ? cl.wrongOption
+                        : ""
+                    }`}
+                    onClick={() => handleSelect(task.id, key)}
+                  >
+                    <span className={cl.optionLetter}>{key}</span>
+                    <span className={cl.optionCode}>{value}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className={cl.taskFooter}>
+                <button
+                  type="button"
+                  className={cl.checkBtn}
+                  onClick={() => handleCheck(task.id)}
+                  disabled={!selected}
+                >
+                  Check answer
+                </button>
+
+                {checked && (
+                  <p
+                    className={`${cl.feedback} ${
+                      isCorrect ? cl.feedbackCorrect : cl.feedbackWrong
+                    }`}
+                  >
+                    {isCorrect
+                      ? "Correct!"
+                      : `Not quite. Correct answer: ${task.correct}`}
+                  </p>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
+export default FillMissingLineSection;

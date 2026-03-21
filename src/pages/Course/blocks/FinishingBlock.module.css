@@ -1,0 +1,134 @@
+.finishSection {
+  background: #ffffff;
+  border: 1px solid #ece8df;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.finishContent {
+  min-width: 0;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.finishBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid #f4af25;
+  background: #fff7e7;
+  color: #f4af25;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.finishTitle {
+  margin: 0 0 16px;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.finishText {
+  margin: 0 0 14px;
+  color: #334155;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.finishText:last-child {
+  margin-bottom: 0;
+}
+
+.finishImageWrap {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fffaf0;
+  border: 1px solid #f3e3b2;
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finishImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  object-fit: contain;
+}
+
+@media (max-width: 1199px) {
+  .finishSection {
+    padding: 22px;
+    border-radius: 24px;
+    gap: 22px;
+  }
+
+  .finishContent {
+    max-width: 700px;
+  }
+
+  .finishTitle {
+    font-size: 24px;
+  }
+
+  .finishText {
+    font-size: 15px;
+  }
+
+  .finishImageWrap {
+    max-width: 100%;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .finishSection {
+    padding: 18px;
+    border-radius: 20px;
+    gap: 18px;
+  }
+
+  .finishContent {
+    max-width: 100%;
+  }
+
+  .finishBadge {
+    min-height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .finishTitle {
+    font-size: 20px;
+  }
+
+  .finishText {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .finishImageWrap {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .finishImage {
+    border-radius: 14px;
+  }
+}

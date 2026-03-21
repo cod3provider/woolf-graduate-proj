@@ -1,0 +1,91 @@
+.theorySection {
+  background: #ffffff;
+  border: 1px solid #ece8df;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.sectionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid #f4af25;
+  background: #fff7e7;
+  color: #f4af25;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  margin: 0 0 20px;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.textBlock p {
+  margin: 0;
+  color: #334155;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.hl {
+  font-weight: 700;
+  color: #0f172a;
+  background: linear-gradient(transparent 65%, #fff1c2 65%);
+}
+
+@media (max-width: 1199px) {
+  .theorySection {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .sectionTitle {
+    font-size: 24px;
+  }
+
+  .textBlock p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .theorySection {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .sectionBadge {
+    min-height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .textBlock {
+    gap: 14px;
+  }
+
+  .textBlock p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+}
