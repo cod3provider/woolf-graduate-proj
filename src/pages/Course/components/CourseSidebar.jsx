@@ -1,4 +1,5 @@
 import { FaCheck, FaLock } from "react-icons/fa";
+import { useAuth } from "../../../context/AuthContext.jsx";
 import cl from "./CourseSidebar.module.css";
 
 const CourseSidebar = ({
@@ -6,7 +7,10 @@ const CourseSidebar = ({
   setIsSidebarOpen,
   lessons,
   onLessonSelect,
+  hasProAccess = false,
 }) => {
+  const { logOut } = useAuth();
+
   const completedOrCurrentCount = lessons.filter(
     (lesson) => lesson.status === "passed" || lesson.status === "active"
   ).length;
@@ -15,8 +19,8 @@ const CourseSidebar = ({
     (completedOrCurrentCount / lessons.length) * 100
   );
 
-  const handleLessonKeyDown = (e, lesson) => {
-    if (lesson.status === "locked") return;
+  const handleLessonKeyDown = (e, lesson, isLocked) => {
+    if (isLocked) return;
 
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -58,14 +62,16 @@ const CourseSidebar = ({
 
       <ul className={cl.lessonList}>
         {lessons.map((lesson) => {
-          const isLocked = lesson.status === "locked";
+          const isLocked = !lesson.isFree && !hasProAccess;
 
           return (
             <li
               key={lesson.id}
-              className={`${cl.lessonItem} ${cl[lesson.status]}`}
+              className={`${cl.lessonItem} ${cl[lesson.status] || ""} ${
+                isLocked ? cl.locked : ""
+              }`}
               onClick={() => !isLocked && onLessonSelect(lesson.id)}
-              onKeyDown={(e) => handleLessonKeyDown(e, lesson)}
+              onKeyDown={(e) => handleLessonKeyDown(e, lesson, isLocked)}
               role="button"
               tabIndex={isLocked ? -1 : 0}
               aria-disabled={isLocked}
@@ -75,7 +81,7 @@ const CourseSidebar = ({
                 <span className={cl.lessonIcon}>
                   {lesson.status === "passed" ? (
                     <FaCheck />
-                  ) : lesson.status === "locked" ? (
+                  ) : isLocked ? (
                     <FaLock />
                   ) : (
                     <span className={cl.lessonDot}></span>
@@ -92,21 +98,19 @@ const CourseSidebar = ({
                 <span className={cl.currentBadge}>Current</span>
               )}
 
-              {lesson.status === "locked" && (
-                <span className={cl.lockText}>Pro</span>
-              )}
+              {isLocked && <span className={cl.lockText}>Pro</span>}
             </li>
           );
         })}
       </ul>
 
-      <button type="button" className={cl.buyBtn}>
-        Buy Full Course
-      </button>
+      {!hasProAccess && (
+        <button type="button" className={cl.buyBtn}>
+          Buy Full Course
+        </button>
+      )}
 
-      <button type="button" className={cl.signOutBtn}>
-        Sign Out
-      </button>
+      
     </aside>
   );
 };
