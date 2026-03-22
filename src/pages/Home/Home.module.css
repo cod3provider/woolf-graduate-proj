@@ -6,7 +6,6 @@
 }
 
 .heroSection {
-  padding-top: 160px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 358px;
   gap: 40px;
@@ -300,9 +299,9 @@
 }
 
 @media (max-width: 767px) {
-  .heroSection {
-    padding-top: 80px;
-  }
+  /*.heroSection {*/
+  /*  padding-top: 40px;*/
+  /*}*/
 
   .title {
     font-size: 32px;

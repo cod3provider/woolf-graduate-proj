@@ -1,4 +1,5 @@
 .sidebar {
+  position: relative;
   background: #ffffff;
   border: 1px solid #ece8df;
   border-radius: 28px;
@@ -18,6 +19,29 @@
   gap: 12px;
 }
 
+.sideNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  padding: 8px;
+
+  background: #ece8df;
+  border-radius: 25px;
+}
+
+.sideNavList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.sideNavText {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .sidebarTitle {
   margin: 0;
   font-size: 28px;
@@ -35,6 +59,10 @@
 }
 
 .closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
   border: none;
   background: transparent;
   font-size: 24px;

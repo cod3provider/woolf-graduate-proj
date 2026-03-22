@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Container from "../../common/Container/Container.jsx";
 import Logo from "../../common/Logo/Logo.jsx";
 import LoginButton from "../../common/LoginButton/LoginButton.jsx";
-import { useAuth } from "../../../context/AuthContext.jsx";
+import { useAuth } from "@context/AuthContext.jsx";
 
 import cl from "./Header.module.css";
 
@@ -38,7 +38,7 @@ const Header = () => {
                   }
                   to="/course"
                 >
-                  Courses
+                  Learn
                 </NavLink>
               </li>
             </ul>

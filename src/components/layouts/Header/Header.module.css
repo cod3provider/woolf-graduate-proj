@@ -1,7 +1,7 @@
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
+  /*position: fixed;*/
+  /*top: 0;*/
+  /*left: 0;*/
   width: 100%;
   min-width: 220px;
   display: flex;
@@ -9,19 +9,16 @@
   align-items: center;
   padding: 0 16px;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 
-  @media (768px <= width) {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 10px;
-    width: 80%;
-    max-width: 1280px;
-    border-radius: 25px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
-  }
+  /*@media (768px <= width) {*/
+    /*left: 50%;*/
+    /*transform: translateX(-50%);*/
+    /*top: 10px;*/
+    /*width: 100%;*/
+    /*max-width: 1280px;*/
+    /*border-radius: 25px;*/
+    /*box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;*/
+  /*}*/
 
   &::before {
     content: "";

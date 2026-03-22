@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "@context/AuthContext.jsx";
 
 import CourseSidebar from "./components/CourseSidebar";
 import CourseTopBar from "./components/CourseTopBar";
