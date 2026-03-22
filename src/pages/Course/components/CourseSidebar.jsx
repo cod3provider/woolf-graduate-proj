@@ -1,15 +1,19 @@
-import { FaCheck, FaLock } from "react-icons/fa";
-import { useAuth } from "../../../context/AuthContext.jsx";
+import {NavLink} from "react-router-dom";
+import {FaCheck, FaHome, FaLock, FaRegUserCircle} from "react-icons/fa";
+
+import {useAuth} from "@context/AuthContext.jsx";
+
 import cl from "./CourseSidebar.module.css";
+import {PiStudentBold} from "react-icons/pi";
 
 const CourseSidebar = ({
-  isSidebarOpen,
-  setIsSidebarOpen,
-  lessons,
-  onLessonSelect,
-  hasProAccess = false,
-}) => {
-  const { logOut } = useAuth();
+                         isSidebarOpen,
+                         setIsSidebarOpen,
+                         lessons,
+                         onLessonSelect,
+                         hasProAccess = false,
+                       }) => {
+  const {logOut} = useAuth();
 
   const completedOrCurrentCount = lessons.filter(
     (lesson) => lesson.status === "passed" || lesson.status === "active"
@@ -30,6 +34,50 @@ const CourseSidebar = ({
 
   return (
     <aside className={`${cl.sidebar} ${isSidebarOpen ? cl.sidebarOpen : ""}`}>
+      <nav className={cl.sideNav}>
+        <ul className={cl.sideNavList}>
+          <li>
+            <NavLink
+              className={({isActive}) =>
+                `${cl.link} ${isActive ? cl.active : ""}`
+              }
+              to="/"
+            >
+              <FaHome />
+              <p className={cl.sideNavText}>
+                Home
+              </p>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({isActive}) =>
+                `${cl.link} ${isActive ? cl.active : ""}`
+              }
+              to="/"
+            >
+              <PiStudentBold />
+              <p className={cl.sideNavText}>
+                Courses
+              </p>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({isActive}) =>
+                `${cl.link} ${isActive ? cl.active : ""}`
+              }
+              to="/"
+            >
+              <FaRegUserCircle />
+              <p className={cl.sideNavText}>
+                Account
+              </p>
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+
       <div className={cl.sidebarHeader}>
         <div>
           <h2 className={cl.sidebarTitle}>Tasty Python</h2>
@@ -56,7 +104,7 @@ const CourseSidebar = ({
       <div className={cl.progressBar}>
         <div
           className={cl.progressFill}
-          style={{ width: `${progressPercent}%` }}
+          style={{width: `${progressPercent}%`}}
         ></div>
       </div>
 
@@ -75,14 +123,14 @@ const CourseSidebar = ({
               role="button"
               tabIndex={isLocked ? -1 : 0}
               aria-disabled={isLocked}
-              style={{ cursor: isLocked ? "not-allowed" : "pointer" }}
+              style={{cursor: isLocked ? "not-allowed" : "pointer"}}
             >
               <div className={cl.lessonLeft}>
                 <span className={cl.lessonIcon}>
                   {lesson.status === "passed" ? (
-                    <FaCheck />
+                    <FaCheck/>
                   ) : isLocked ? (
-                    <FaLock />
+                    <FaLock/>
                   ) : (
                     <span className={cl.lessonDot}></span>
                   )}
@@ -110,7 +158,7 @@ const CourseSidebar = ({
         </button>
       )}
 
-      
+
     </aside>
   );
 };
