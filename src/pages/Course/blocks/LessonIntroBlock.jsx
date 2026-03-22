@@ -2,10 +2,10 @@ import { FaShareAlt } from "react-icons/fa";
 import cl from "./LessonIntroBlock.module.css";
 
 const LessonIntroBlock = ({
-  imageSrc,
-  imageAlt = "Lesson hero illustration",
-  description = "Decorators let you add extra behavior to a function without changing the function itself. In real Python, this is useful for logging, timing, access checks, caching, validation, and formatting output.",
-}) => {
+                            imageSrc,
+                            imageAlt = "Lesson hero illustration",
+                            description = "Decorators let you add extra behavior to a function without changing the function itself. In real Python, this is useful for logging, timing, access checks, caching, validation, and formatting output.",
+                          }) => {
   const handleShare = async () => {
     const shareUrl = window.location.href;
 

@@ -1,4 +1,12 @@
+/* --- Общие переменные и сброс контента --- */
+.contentList {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
 .heroSection {
+  padding-top: 160px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 358px;
   gap: 40px;
@@ -6,6 +14,7 @@
   margin-bottom: 56px;
 }
 
+/* --- Текстовый контент Hero --- */
 .textContainer {
   display: flex;
   flex-direction: column;
@@ -15,7 +24,6 @@
 .welcomeBadge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   align-self: flex-start;
   min-height: 36px;
   padding: 0 16px;
@@ -25,21 +33,17 @@
   color: #f4af25;
   font-size: 14px;
   font-weight: 600;
-  line-height: 1;
 }
 
 .title {
   margin: 0;
-  max-width: 520px;
   font-weight: 700;
   font-size: 48px;
   line-height: 1.25;
   color: #0f172a;
-  text-align: left;
 }
 
 .titleSpan {
-  display: inline-flex;
   color: #f4af25;
 }
 
@@ -50,9 +54,9 @@
   font-size: 18px;
   line-height: 1.63;
   color: #475569;
-  text-align: left;
 }
 
+/* --- Тэги доступа (Free/Locked) --- */
 .lessonAccess {
   display: flex;
   align-items: center;
@@ -60,8 +64,7 @@
   flex-wrap: wrap;
 }
 
-.freeTag,
-.lockedTag {
+.freeTag, .lockedTag {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -84,84 +87,97 @@
   border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
+/* --- Кнопки и Ссылки --- */
 .linksList {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .listItem {
   display: flex;
+  width: 100%;
 }
 
 .btn {
   display: inline-flex;
-  align-items: center;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
+  width: 100%;
   min-height: 56px;
-  padding: 0 28px;
-  border-radius: 24px;
   font-weight: 700;
   font-size: 18px;
-  line-height: 1.4;
-  text-align: center;
+  border-radius: 24px;
+  padding: 16px 32px;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .startBtn {
-  box-shadow: 0 4px 0 0 #d99a1d;
   background: #f4af25;
   color: #0f172a;
+  box-shadow: 0 4px 0 0 #d99a1d;
 }
 
 .startBtn:hover {
   transform: translateY(-1px);
+  box-shadow: 0 5px 0 0 #d99a1d;
 }
 
 .demoBtn {
-  border: 2px solid #e2e8f0;
   background: #e2e8f0;
   color: #0f172a;
+  border: 2px solid transparent;
 }
 
 .demoBtn:hover {
   background: #dbe3ec;
 }
 
+.statistic {
+  font-weight: 500;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* --- Сетка цветных блоков (Справа) --- */
 .blocksWrap {
-  padding: 24px;
-  width: 358px;
-  height: 358px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  width: 100%;
+  max-width: 425px;
+  aspect-ratio: 1/1;
+  background: #fff;
   border: 4px solid #e2e8f0;
   border-radius: 24px;
   box-shadow: 8px 8px 0 0 rgba(244, 175, 37, 0.2);
-  background: #fff;
 }
 
 .innerBlocksWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   border: 2px dashed #cbd5e1;
   border-radius: 16px;
-  padding: 10px 0;
-  width: 302px;
-  height: 302px;
 }
 
 .listBlocks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 28px;
-  padding: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .block {
   width: 82px;
   height: 82px;
-  border-radius: 16px;
+  border-radius: 20px;
   border: 2px solid rgba(244, 175, 37, 0.5);
 }
 
@@ -181,28 +197,52 @@
   background: rgba(192, 132, 252, 0.3);
 }
 
+/* --- Секции с карточками (Инфо) --- */
 .infoSection {
-  margin-bottom: 48px;
+  margin-bottom: 56px;
 }
 
 .sectionTitle {
-  margin: 0 0 24px;
+  margin-bottom: 24px;
   font-size: 32px;
-  line-height: 1.2;
   color: #0f172a;
 }
 
 .cardsList {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+.listDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (900px <= width) {
+    flex-direction: row;
+
+  }
+}
+
+.listDescriptionItem {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  padding: 26px;
+  text-align: left;
+
+  border-radius: 24px;
+  border: 2px solid #f1f5f9;
+  background-color: #FFFFFF;
 }
 
 .card {
   padding: 24px;
-  border: 1px solid #ece8df;
   border-radius: 24px;
-  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  background: #fff;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
 }
 
@@ -214,25 +254,11 @@
   background: rgba(244, 175, 37, 0.2);
 }
 
-.cardTitle {
-  margin: 0 0 10px;
-  font-size: 20px;
-  color: #0f172a;
-}
-
-.cardText {
-  margin: 0;
-  color: #64748b;
-  line-height: 1.6;
-}
-
+/* --- Список фич (Features) --- */
 .featureList {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
 }
 
 .featureItem {
@@ -244,92 +270,54 @@
   font-weight: 500;
 }
 
+/* --- АДАПТИВ (Медиа-запросы в одном месте) --- */
+
+@media (min-width: 900px) {
+  .linksList {
+    flex-direction: row;
+  }
+}
+
 @media (max-width: 1199px) {
   .heroSection {
     grid-template-columns: 1fr;
-    gap: 28px;
+    justify-items: center;
+    text-align: center;
   }
 
-  .blocksWrap {
-    width: 100%;
-    max-width: 358px;
+  .title, .subtitle {
+    margin: 0 auto;
+    text-align: center;
   }
 
-  .cardsList,
-  .featureList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .welcomeBadge {
+    align-self: center;
   }
 
-  .title {
-    font-size: 40px;
+  .cardsList, .listDescription, .featureList {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 767px) {
   .heroSection {
-    margin-bottom: 40px;
+    padding-top: 80px;
   }
 
   .title {
     font-size: 32px;
-    max-width: 100%;
   }
 
-  .subtitle {
-    font-size: 16px;
-  }
-
-  .welcomeBadge,
-  .freeTag,
-  .lockedTag {
-    font-size: 13px;
-  }
-
-  .linksList {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .listItem {
-    width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-    min-height: 52px;
-    font-size: 16px;
-  }
-
-  .blocksWrap {
-    height: auto;
-    padding: 18px;
-  }
-
-  .innerBlocksWrap {
-    width: 100%;
-    height: auto;
-    padding: 16px;
-  }
-
-  .listBlocks {
-    padding: 20px;
-    gap: 18px;
-  }
-
-  .cardsList,
-  .featureList {
+  .cardsList, .listDescription, .featureList {
     grid-template-columns: 1fr;
   }
 
-  .sectionTitle {
-    font-size: 26px;
+  .blocksWrap {
+    max-width: 320px;
   }
 
-  .card {
-    padding: 20px;
-  }
-
-  .featureItem {
-    padding: 16px 18px;
+  .block {
+    width: 70px;
+    height: 70px;
   }
 }

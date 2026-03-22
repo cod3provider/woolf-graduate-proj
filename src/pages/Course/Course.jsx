@@ -94,11 +94,11 @@ const Course = () => {
   }, [lessonSlug, requestedLesson, activeLesson.slug, navigate]);
 
   useEffect(() => {
-  if (!loading && !user) {
-    openAuthModal(lessonSlug ? `/course/${lessonSlug}` : "/course/closure");
-    navigate("/", { replace: true });
-  }
-}, [user, loading, lessonSlug, navigate, openAuthModal]);
+    if (!loading && !user) {
+      openAuthModal(lessonSlug ? `/course/${lessonSlug}` : "/course/closure");
+      navigate("/", { replace: true });
+    }
+  }, [user, loading, lessonSlug, navigate, openAuthModal]);
 
   useEffect(() => {
     setIsSidebarOpen(false);
