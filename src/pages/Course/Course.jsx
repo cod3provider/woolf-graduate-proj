@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "@context/AuthContext.jsx";
 
 import CourseSidebar from "./components/CourseSidebar";
 import CourseTopBar from "./components/CourseTopBar";
@@ -94,11 +94,11 @@ const Course = () => {
   }, [lessonSlug, requestedLesson, activeLesson.slug, navigate]);
 
   useEffect(() => {
-  if (!loading && !user) {
-    openAuthModal(lessonSlug ? `/course/${lessonSlug}` : "/course/closure");
-    navigate("/", { replace: true });
-  }
-}, [user, loading, lessonSlug, navigate, openAuthModal]);
+    if (!loading && !user) {
+      openAuthModal(lessonSlug ? `/course/${lessonSlug}` : "/course/closure");
+      navigate("/", { replace: true });
+    }
+  }, [user, loading, lessonSlug, navigate, openAuthModal]);
 
   useEffect(() => {
     setIsSidebarOpen(false);

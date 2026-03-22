@@ -70,6 +70,10 @@ const Home = () => {
               </Link>
             </li>
           </ul>
+
+          <div className={cl.statistic}>
+            <p>Joined by 10,000+ little coders</p>
+          </div>
         </div>
 
         <div className={cl.blocksWrap}>
@@ -93,33 +97,29 @@ const Home = () => {
       </section>
 
       <section className={cl.infoSection}>
-        <h2 className={cl.sectionTitle}>How to use the app</h2>
+        <div className={cl.tiles}>
+          <h2 className={cl.sectionTitle}>How to use the app</h2>
 
-        <ul className={cl.cardsList}>
-          <li className={cl.card}>
-            <div className={cl.iconBackground}></div>
-            <h3 className={cl.cardTitle}>Read</h3>
-            <p className={cl.cardText}>
-              Start with a short lesson focused on one Python concept at a time.
-            </p>
-          </li>
+          <ul className={cl.listDescription}>
+            <li className={cl.listDescriptionItem}>
+              <div className={cl.iconBackground}></div>
+              <h3 className={cl.cardTitle}>Read</h3>
+              <p className={cl.cardText}>Start with a short lesson focused on one Python concept at a time.</p>
+            </li>
 
-          <li className={cl.card}>
-            <div className={cl.iconBackground}></div>
-            <h3 className={cl.cardTitle}>Practice</h3>
-            <p className={cl.cardText}>
-              Complete quick tasks right after the explanation to consolidate the topic.
-            </p>
-          </li>
+            <li className={cl.listDescriptionItem}>
+              <div className={cl.iconBackground}></div>
+              <h3 className={cl.cardTitle}>Practice</h3>
+              <p className={cl.cardText}>Complete quick tasks right after the explanation to consolidate the topic.</p>
+            </li>
 
-          <li className={cl.card}>
-            <div className={cl.iconBackground}></div>
-            <h3 className={cl.cardTitle}>Progress</h3>
-            <p className={cl.cardText}>
-              Move lesson by lesson and build confidence for junior-level questions.
-            </p>
-          </li>
-        </ul>
+            <li className={cl.listDescriptionItem}>
+              <div className={cl.iconBackground}></div>
+              <h3 className={cl.cardTitle}>Progress</h3>
+              <p className={cl.cardText}>Move lesson by lesson and build confidence for junior-level questions.</p>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section className={cl.infoSection}>
