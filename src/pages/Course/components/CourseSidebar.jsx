@@ -84,14 +84,7 @@ const CourseSidebar = ({
           <p className={cl.sidebarSubtitle}>Course Progress</p>
         </div>
 
-        <button
-          type="button"
-          className={cl.closeBtn}
-          onClick={() => setIsSidebarOpen(false)}
-          aria-label="Close sidebar"
-        >
-          ×
-        </button>
+        
       </div>
 
       <div className={cl.progressInfo}>

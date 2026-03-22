@@ -8,7 +8,7 @@ const LoginButton = () => {
     <button
       type="button"
       className={cl.loginBtn}
-      onClick={openAuthModal}
+      onClick={() => openAuthModal()}
     >
       Login
     </button>

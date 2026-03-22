@@ -24,11 +24,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const openAuthModal = (path = null) => {
-    if (path) {
-      setRedirectPath(path);
-    }
-    setIsAuthModalOpen(true);
-  };
+  setRedirectPath(typeof path === "string" ? path : null);
+  setIsAuthModalOpen(true);
+};
 
   const closeAuthModal = () => {
     setIsAuthModalOpen(false);
@@ -36,21 +34,24 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signInWithGoogle = async () => {
-    try {
-      const targetPath = redirectPath;
+  try {
+    const targetPath =
+      typeof redirectPath === "string" && redirectPath.startsWith("/")
+        ? redirectPath
+        : null;
 
-      await signInWithPopup(auth, googleProvider);
+    await signInWithPopup(auth, googleProvider);
 
-      setIsAuthModalOpen(false);
-      setRedirectPath(null);
+    setIsAuthModalOpen(false);
+    setRedirectPath(null);
 
-      if (targetPath) {
-        window.location.assign(targetPath);
-      }
-    } catch (error) {
-      console.error("Google sign-in error:", error);
+    if (targetPath) {
+      window.location.assign(targetPath);
     }
-  };
+  } catch (error) {
+    console.error("Google sign-in error:", error);
+  }
+};
 
   const logOut = async () => {
     try {
