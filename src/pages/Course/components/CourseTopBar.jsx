@@ -5,6 +5,10 @@ const CourseTopBar = ({
   setIsSidebarOpen,
   moduleLabel = "",
   lessonTitle = "",
+  hasProAccess = false,
+  onUpgradeClick,
+  userInitial = "U",
+  userPhoto = "",
 }) => {
   return (
     <div className={cl.topBar}>
@@ -25,10 +29,27 @@ const CourseTopBar = ({
       </div>
 
       <div className={cl.topActions}>
-        <button type="button" className={cl.smallBuyBtn}>
-          Buy Course
-        </button>
-        <div className={cl.avatar}>E</div>
+        {!hasProAccess && (
+          <button
+            type="button"
+            className={cl.smallBuyBtn}
+            onClick={onUpgradeClick}
+          >
+            Buy Course
+          </button>
+        )}
+
+        <div className={cl.avatar} aria-label="User avatar">
+          {userPhoto ? (
+            <img
+              src={userPhoto}
+              alt="User avatar"
+              className={cl.avatarImage}
+            />
+          ) : (
+            userInitial
+          )}
+        </div>
       </div>
     </div>
   );
