@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from "./context/AuthContext.jsx";
 
 import './index.css'
+import MyLearning from "./pages/MyLearning/MyLearning.jsx";
 
 import App from './App.jsx'
 import Course from "./pages/Course/Course.jsx"
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
             <Route path="course/:lessonSlug?" element={<Course />} />
+            <Route path="my-learning" element={<MyLearning />} />
           </Route>
         </Routes>
       </BrowserRouter>

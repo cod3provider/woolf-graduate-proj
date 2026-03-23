@@ -160,8 +160,6 @@
 }
 
 .active {
-  background: #fff7e7;
-  border: 1px solid #f4af25;
   color: #f4af25;
   font-weight: 600;
 }
