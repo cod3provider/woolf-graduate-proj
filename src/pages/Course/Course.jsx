@@ -13,6 +13,9 @@ import useProAccess from "./hooks/useProAccess";
 
 import cl from "./Course.module.css";
 
+const AVATAR_STORAGE_KEY = "tasty-python-avatar-color";
+const AVATAR_MODE_STORAGE_KEY = "tasty-python-avatar-mode";
+
 const Course = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -35,6 +38,13 @@ const Course = () => {
     "U";
 
   const userPhoto = user?.photoURL || "";
+
+  const avatarMode =
+    localStorage.getItem(AVATAR_MODE_STORAGE_KEY) ||
+    (userPhoto ? "photo" : "initial");
+
+  const avatarColor =
+    localStorage.getItem(AVATAR_STORAGE_KEY) || "#f4af25";
 
   const baseLessons = useMemo(() => {
     return lessonsData.map((lesson) => {
@@ -167,6 +177,8 @@ const Course = () => {
           onUpgradeClick={() => setIsPaymentModalOpen(true)}
           userInitial={userInitial}
           userPhoto={userPhoto}
+          avatarMode={avatarMode}
+          avatarColor={avatarColor}
         />
 
         <ActiveLessonComponent />

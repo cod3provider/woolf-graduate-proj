@@ -9,7 +9,11 @@ const CourseTopBar = ({
   onUpgradeClick,
   userInitial = "U",
   userPhoto = "",
+  avatarMode = "initial",
+  avatarColor = "#f4af25",
 }) => {
+  const shouldShowPhoto = avatarMode === "photo" && !!userPhoto;
+
   return (
     <div className={cl.topBar}>
       <div className={cl.topBarLeft}>
@@ -39,8 +43,12 @@ const CourseTopBar = ({
           </button>
         )}
 
-        <div className={cl.avatar} aria-label="User avatar">
-          {userPhoto ? (
+        <div
+          className={cl.avatar}
+          style={!shouldShowPhoto ? { backgroundColor: avatarColor } : undefined}
+          aria-label="User avatar"
+        >
+          {shouldShowPhoto ? (
             <img
               src={userPhoto}
               alt="User avatar"

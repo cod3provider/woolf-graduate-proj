@@ -6,10 +6,15 @@ import { useAuth } from "../../context/AuthContext.jsx";
 
 import cl from "./Home.module.css";
 
+const NAME_STORAGE_KEY = "tasty-python-display-name";
+
 const Home = () => {
   const { user, openAuthModal } = useAuth();
 
+  const savedCustomName = localStorage.getItem(NAME_STORAGE_KEY) || "";
+
   const userName =
+    savedCustomName.trim() ||
     user?.displayName?.split(" ")[0] ||
     user?.email?.split("@")[0] ||
     "friend";
@@ -27,7 +32,7 @@ const Home = () => {
         <div className={cl.textContainer}>
           {user && (
             <p className={cl.welcomeBadge}>
-              Welcome back, {userName}
+              Welcome, {userName}
             </p>
           )}
 
@@ -61,13 +66,22 @@ const Home = () => {
             </li>
 
             <li className={cl.listItem}>
-              <Link
-                to="/course"
-                className={`${cl.demoBtn} ${cl.btn}`}
-                onClick={(e) => handleProtectedLinkClick(e, "/course")}
-              >
-                Open Course
-              </Link>
+              {user ? (
+                <Link
+                  to="/my-learning"
+                  className={`${cl.demoBtn} ${cl.btn}`}
+                >
+                  My Learning
+                </Link>
+              ) : (
+                <Link
+                  to="/course"
+                  className={`${cl.demoBtn} ${cl.btn}`}
+                  onClick={(e) => handleProtectedLinkClick(e, "/course")}
+                >
+                  Open Course
+                </Link>
+              )}
             </li>
           </ul>
 
@@ -104,19 +118,25 @@ const Home = () => {
             <li className={cl.listDescriptionItem}>
               <div className={cl.iconBackground}></div>
               <h3 className={cl.cardTitle}>Read</h3>
-              <p className={cl.cardText}>Start with a short lesson focused on one Python concept at a time.</p>
+              <p className={cl.cardText}>
+                Start with a short lesson focused on one Python concept at a time.
+              </p>
             </li>
 
             <li className={cl.listDescriptionItem}>
               <div className={cl.iconBackground}></div>
               <h3 className={cl.cardTitle}>Practice</h3>
-              <p className={cl.cardText}>Complete quick tasks right after the explanation to consolidate the topic.</p>
+              <p className={cl.cardText}>
+                Complete quick tasks right after the explanation to consolidate the topic.
+              </p>
             </li>
 
             <li className={cl.listDescriptionItem}>
               <div className={cl.iconBackground}></div>
               <h3 className={cl.cardTitle}>Progress</h3>
-              <p className={cl.cardText}>Move lesson by lesson and build confidence for junior-level questions.</p>
+              <p className={cl.cardText}>
+                Move lesson by lesson and build confidence for junior-level questions.
+              </p>
             </li>
           </ul>
         </div>
