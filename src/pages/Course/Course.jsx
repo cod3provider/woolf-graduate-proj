@@ -1,32 +1,40 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { useAuth } from "@context/AuthContext.jsx";
+
+import PaymentModal from "./components/payment/PaymentModal/PaymentModal";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 import CourseSidebar from "./components/CourseSidebar";
 import CourseTopBar from "./components/CourseTopBar";
 import lessonsData from "./data/lessonData";
 import useCourseProgress from "./hooks/useCourseProgress";
+import useProAccess from "./hooks/useProAccess";
 
 import cl from "./Course.module.css";
 
 const Course = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const { progress, completeLesson, resetProgress } = useCourseProgress(
     lessonsData.length
   );
+
+  const { hasProAccess, grantProAccess } = useProAccess();
+  const { user, loading, openAuthModal } = useAuth();
 
   const { lessonSlug } = useParams();
   const navigate = useNavigate();
 
   const { completedLessonIds, highestUnlockedLessonId } = progress;
 
-  // TEMPORARY DEMO FLAG
-  // Later replace with real user plan from backend / Firestore
-  const hasProAccess = false;
+  const userInitial =
+    user?.displayName?.trim()?.charAt(0)?.toUpperCase() ||
+    user?.email?.trim()?.charAt(0)?.toUpperCase() ||
+    "U";
 
-  const { user, loading, openAuthModal } = useAuth();
+  const userPhoto = user?.photoURL || "";
 
   const baseLessons = useMemo(() => {
     return lessonsData.map((lesson) => {
@@ -147,6 +155,7 @@ const Course = () => {
         lessons={lessons}
         onLessonSelect={handleLessonSelect}
         hasProAccess={hasProAccess}
+        onUpgradeClick={() => setIsPaymentModalOpen(true)}
       />
 
       <div className={cl.content}>
@@ -154,6 +163,10 @@ const Course = () => {
           setIsSidebarOpen={setIsSidebarOpen}
           moduleLabel={activeLesson.moduleLabel}
           lessonTitle={activeLesson.title}
+          hasProAccess={hasProAccess}
+          onUpgradeClick={() => setIsPaymentModalOpen(true)}
+          userInitial={userInitial}
+          userPhoto={userPhoto}
         />
 
         <ActiveLessonComponent />
@@ -180,6 +193,12 @@ const Course = () => {
             {!isLastAccessibleLesson && <FaArrowRight />}
           </button>
         </div>
+
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          onClose={() => setIsPaymentModalOpen(false)}
+          onPaymentSuccess={grantProAccess}
+        />
 
         <button
           type="button"
