@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaLock } from "react-icons/fa";
 
 import Container from "@components/common/Container/Container.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
+
+import useProAccess from "../Course/hooks/useProAccess";
+import PaymentModal from "../Course/components/payment/PaymentModal/PaymentModal.jsx";
 
 import cl from "./Home.module.css";
 
@@ -10,6 +14,11 @@ const NAME_STORAGE_KEY = "tasty-python-display-name";
 
 const Home = () => {
   const { user, openAuthModal } = useAuth();
+  const { hasProAccess, grantProAccess } = useProAccess();
+
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [shouldOpenPaymentAfterLogin, setShouldOpenPaymentAfterLogin] =
+    useState(false);
 
   const savedCustomName = localStorage.getItem(NAME_STORAGE_KEY) || "";
 
@@ -19,6 +28,13 @@ const Home = () => {
     user?.email?.split("@")[0] ||
     "friend";
 
+  useEffect(() => {
+    if (user && shouldOpenPaymentAfterLogin && !hasProAccess) {
+      setIsPaymentModalOpen(true);
+      setShouldOpenPaymentAfterLogin(false);
+    }
+  }, [user, shouldOpenPaymentAfterLogin, hasProAccess]);
+
   const handleProtectedLinkClick = (e, path) => {
     if (!user) {
       e.preventDefault();
@@ -26,15 +42,23 @@ const Home = () => {
     }
   };
 
+  const handleBuyCourseClick = () => {
+    if (!user) {
+      setShouldOpenPaymentAfterLogin(true);
+      openAuthModal();
+      return;
+    }
+
+    if (!hasProAccess) {
+      setIsPaymentModalOpen(true);
+    }
+  };
+
   return (
     <Container>
       <section className={cl.heroSection}>
         <div className={cl.textContainer}>
-          {user && (
-            <p className={cl.welcomeBadge}>
-              Welcome, {userName}
-            </p>
-          )}
+          {user && <p className={cl.welcomeBadge}>Welcome, {userName}</p>}
 
           <h1 className={cl.title}>
             Learn Python in <span className={cl.titleSpan}>small steps</span>
@@ -66,21 +90,18 @@ const Home = () => {
             </li>
 
             <li className={cl.listItem}>
-              {user ? (
-                <Link
-                  to="/my-learning"
-                  className={`${cl.demoBtn} ${cl.btn}`}
-                >
+              {user && hasProAccess ? (
+                <Link to="/my-learning" className={`${cl.demoBtn} ${cl.btn}`}>
                   My Learning
                 </Link>
               ) : (
-                <Link
-                  to="/course"
-                  className={`${cl.demoBtn} ${cl.btn}`}
-                  onClick={(e) => handleProtectedLinkClick(e, "/course")}
+                <button
+                  type="button"
+                  className={`${cl.demoBtn} ${cl.btn} ${cl.actionBtn}`}
+                  onClick={handleBuyCourseClick}
                 >
-                  Open Course
-                </Link>
+                  Buy Full Course
+                </button>
               )}
             </li>
           </ul>
@@ -119,7 +140,8 @@ const Home = () => {
               <div className={cl.iconBackground}></div>
               <h3 className={cl.cardTitle}>Read</h3>
               <p className={cl.cardText}>
-                Start with a short lesson focused on one Python concept at a time.
+                Start with a short lesson focused on one Python concept at a
+                time.
               </p>
             </li>
 
@@ -127,7 +149,8 @@ const Home = () => {
               <div className={cl.iconBackground}></div>
               <h3 className={cl.cardTitle}>Practice</h3>
               <p className={cl.cardText}>
-                Complete quick tasks right after the explanation to consolidate the topic.
+                Complete quick tasks right after the explanation to consolidate
+                the topic.
               </p>
             </li>
 
@@ -135,7 +158,8 @@ const Home = () => {
               <div className={cl.iconBackground}></div>
               <h3 className={cl.cardTitle}>Progress</h3>
               <p className={cl.cardText}>
-                Move lesson by lesson and build confidence for junior-level questions.
+                Move lesson by lesson and build confidence for junior-level
+                questions.
               </p>
             </li>
           </ul>
@@ -149,9 +173,17 @@ const Home = () => {
           <li className={cl.featureItem}>Short lessons instead of overload</li>
           <li className={cl.featureItem}>Metaphors for difficult topics</li>
           <li className={cl.featureItem}>Practice that matches the theory</li>
-          <li className={cl.featureItem}>Focus on junior Python interview topics</li>
+          <li className={cl.featureItem}>
+            Focus on junior Python interview topics
+          </li>
         </ul>
       </section>
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        onPaymentSuccess={grantProAccess}
+      />
     </Container>
   );
 };
