@@ -40,7 +40,7 @@ const LessonRenderer = ({ sections }) => {
         return (
           <BlockComponent
             key={`${section.type}-${index}`}
-            {/*{...(section.props || section || {})}*/}
+            /*{...(section.props || section || {})}*/
             {...(section.props || {})}
           />
         );
