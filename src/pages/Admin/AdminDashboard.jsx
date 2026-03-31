@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaPlus, FaEdit, FaTrash, FaBookOpen } from "react-icons/fa";
 
-import { api } from "../../services/api";
+import { api } from "@/services/api.js";
 
 import cl from "./AdminDashboard.module.css";
 
