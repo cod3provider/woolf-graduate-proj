@@ -325,3 +325,10 @@
     height: 70px;
   }
 }
+
+.comingSoon {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9ca3af;
+  margin: 40px 0;
+}

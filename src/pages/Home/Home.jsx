@@ -7,6 +7,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 
 import useProAccess from "../Course/hooks/useProAccess";
 import PaymentModal from "../Course/components/payment/PaymentModal/PaymentModal.jsx";
+import { api } from "@/services/api.js";
 
 import cl from "./Home.module.css";
 
@@ -20,6 +21,10 @@ const Home = () => {
   const [shouldOpenPaymentAfterLogin, setShouldOpenPaymentAfterLogin] =
     useState(false);
 
+  const [firstCourse, setFirstCourse] = useState(null);
+  const [lessons, setLessons] = useState([]);
+  const [courseLoaded, setCourseLoaded] = useState(false);
+
   const savedCustomName = localStorage.getItem(NAME_STORAGE_KEY) || "";
 
   const userName =
@@ -27,6 +32,22 @@ const Home = () => {
     user?.displayName?.split(" ")[0] ||
     user?.email?.split("@")[0] ||
     "friend";
+
+  useEffect(() => {
+    api.getCourses()
+      .then(courses => {
+        if (courses.length) setFirstCourse(courses[0]);
+        setCourseLoaded(true);
+      })
+      .catch(err => console.error("Failed to load courses", err));
+  }, []);
+
+  useEffect(() => {
+    if (!user || !firstCourse) return;
+    api.getCourseLessonsBySlug(firstCourse.slug)
+      .then(data => setLessons(data))
+      .catch(err => console.error("Failed to load lessons", err));
+  }, [user, firstCourse]);
 
   useEffect(() => {
     if (user && shouldOpenPaymentAfterLogin && !hasProAccess) {
@@ -60,55 +81,75 @@ const Home = () => {
         <div className={cl.textContainer}>
           {user && <p className={cl.welcomeBadge}>Welcome, {userName}</p>}
 
-          <h1 className={cl.title}>
-            Learn Python in <span className={cl.titleSpan}>small steps</span>
-          </h1>
+          {courseLoaded && (!firstCourse || firstCourse.lesson_count === 0) ? (
+            <p className={cl.comingSoon}>Courses coming soon</p>
+          ) : (
+            <>
+              <h1 className={cl.title}>
+                Learn Python in <span className={cl.titleSpan}>small steps</span>
+              </h1>
 
-          <p className={cl.subtitle}>
-            Short lessons, simple metaphors, and practical tasks to help you
-            understand tricky Python topics and prepare for junior interviews.
-          </p>
+              <p className={cl.subtitle}>
+                Short lessons, simple metaphors, and practical tasks to help you
+                understand tricky Python topics and prepare for junior interviews.
+              </p>
 
-          <div className={cl.lessonAccess}>
-            <span className={cl.freeTag}>3 free lessons</span>
-            <span className={cl.lockedTag}>
-              <FaLock />
-              2 locked lessons
-            </span>
-          </div>
-
-          <ul className={cl.linksList}>
-            <li className={cl.listItem}>
-              <Link
-                to="/course/closure"
-                className={`${cl.startBtn} ${cl.btn}`}
-                onClick={(e) => handleProtectedLinkClick(e, "/course/closure")}
-              >
-                <span>Start Free Lessons</span>
-                <FaArrowRight />
-              </Link>
-            </li>
-
-            <li className={cl.listItem}>
-              {user && hasProAccess ? (
-                <Link to="/my-learning" className={`${cl.demoBtn} ${cl.btn}`}>
-                  My Learning
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  className={`${cl.demoBtn} ${cl.btn} ${cl.actionBtn}`}
-                  onClick={handleBuyCourseClick}
-                >
-                  Buy Full Course
-                </button>
+              {lessons.length > 0 && (
+                <div className={cl.lessonAccess}>
+                  <span className={cl.freeTag}>
+                    {lessons.filter(l => l.is_free).length} free lessons
+                  </span>
+                  <span className={cl.lockedTag}>
+                    <FaLock />
+                    {lessons.filter(l => !l.is_free).length} locked lessons
+                  </span>
+                </div>
               )}
-            </li>
-          </ul>
 
-          <div className={cl.statistic}>
-            <p>Joined by 10,000+ little coders</p>
-          </div>
+              <ul className={cl.linksList}>
+                <li className={cl.listItem}>
+                  {firstCourse ? (
+                    <Link
+                      to={`/course/${firstCourse.slug}`}
+                      className={`${cl.startBtn} ${cl.btn}`}
+                    >
+                      <span>Start Free Lessons</span>
+                      <FaArrowRight />
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      className={`${cl.startBtn} ${cl.btn}`}
+                      onClick={(e) => handleProtectedLinkClick(e, "/course")}
+                    >
+                      <span>Start Free Lessons</span>
+                      <FaArrowRight />
+                    </button>
+                  )}
+                </li>
+
+                <li className={cl.listItem}>
+                  {user && hasProAccess ? (
+                    <Link to="/my-learning" className={`${cl.demoBtn} ${cl.btn}`}>
+                      My Learning
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      className={`${cl.demoBtn} ${cl.btn} ${cl.actionBtn}`}
+                      onClick={handleBuyCourseClick}
+                    >
+                      Buy Full Course
+                    </button>
+                  )}
+                </li>
+              </ul>
+
+              <div className={cl.statistic}>
+                <p>Joined by 10,000+ little coders</p>
+              </div>
+            </>
+          )}
         </div>
 
         <div className={cl.blocksWrap}>
