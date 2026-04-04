@@ -242,6 +242,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-sizing: border-box;
+  color: #111827;
+  background: #fff;
 }
 
 /* Превью */
@@ -332,6 +334,7 @@
   border-radius: 10px;
   font-size: 1rem;
   background: #f9fafb;
+  color: #111827;
   box-sizing: border-box;
 }
 
