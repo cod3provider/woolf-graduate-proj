@@ -14,11 +14,6 @@ async function fetchWithAuth(endpoint, options = {}) {
     ...options.headers,
   };
 
-  if (user) {
-    const token = await user.getIdToken();
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers,
@@ -59,5 +54,5 @@ export const api = {
     fetchWithAuth(`/courses/${courseSlug}/lessons`),
 
   getFullLesson: (courseSlug, lessonSlug) =>
-    fetchWithAuth(`/lessons/${courseSlug}/${lessonSlug}`),
+    fetchWithAuth(`/courses/${courseSlug}/lessons/${lessonSlug}`),
 };
