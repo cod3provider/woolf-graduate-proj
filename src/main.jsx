@@ -4,11 +4,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from "./context/AuthContext.jsx";
 
 import './index.css'
-import MyLearning from "./pages/MyLearning/MyLearning.jsx";
 
-import App from './App.jsx'
-import Course from "./pages/Course/Course.jsx"
-import Home from "./pages/Home/Home.jsx"
+import App from './App.jsx';
+import Home from "./pages/Home/Home.jsx";
+import Course from "./pages/Course/Course.jsx";
+import MyLearning from "./pages/MyLearning/MyLearning.jsx";
+import AdminDashboard from "@pages/Admin/AdminDashboard.jsx";
+import AdminRoute from "@components/auth/AdminRoute.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,7 +20,12 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
             <Route path="course/:lessonSlug?" element={<Course />} />
+            {/*<Route path="course/:courseSlug/:lessonSlug?" element={<Course />} />*/}
             <Route path="my-learning" element={<MyLearning />} />
+
+            <Route element={<AdminRoute />}>
+              <Route path="admin" element={<AdminDashboard />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

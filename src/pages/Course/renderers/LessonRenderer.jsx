@@ -23,6 +23,13 @@ const blockMap = {
 };
 
 const LessonRenderer = ({ sections }) => {
+// const LessonRenderer = ({ lesson }) => {
+//   const sections = lesson?.sections || [];
+
+  if (sections.length === 0) {
+    return <div style={{padding: '20px'}}>This lesson haven't a content...</div>;
+  }
+
   return (
     <>
       {sections.map((section, index) => {
@@ -33,6 +40,7 @@ const LessonRenderer = ({ sections }) => {
         return (
           <BlockComponent
             key={`${section.type}-${index}`}
+            /*{...(section.props || section || {})}*/
             {...(section.props || {})}
           />
         );
