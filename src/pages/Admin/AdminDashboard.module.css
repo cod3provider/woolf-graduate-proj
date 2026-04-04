@@ -380,7 +380,7 @@
 /* --- СПИСОК КУРСОВ (КАРТОЧКИ) --- */
 .courseGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 20px;
   padding-bottom: 50px;
 }
@@ -401,16 +401,30 @@
   transform: translateY(-4px);
 }
 
+.courseInfo {
+  flex: 1;
+  min-width: 0;
+  margin-right: 16px;
+  text-align: center;
+}
+
 .courseInfo h3 {
   margin: 0 0 8px 0;
   font-size: 1.4rem;
   color: #111827;
 }
 
+.courseInfo p:last-child {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
 .slug {
   font-family: monospace;
   color: #9ca3af;
-  margin-bottom: 15px;
+  margin: 0 0 4px;
 }
 
 .freeBadge { background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }

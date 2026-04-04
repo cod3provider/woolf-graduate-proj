@@ -139,6 +139,7 @@ const AdminDashboard = () => {
             <div className={cl.courseInfo}>
               <h3>{course.title}</h3>
               <p className={cl.slug}>/{course.slug}</p>
+              {course.description && <p>{course.description}</p>}
             </div>
 
             <div className={cl.actions}>
