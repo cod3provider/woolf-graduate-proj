@@ -145,6 +145,7 @@
   border-radius: 8px;
   font-size: 12px;
   cursor: pointer;
+  color: #374151;
 }
 
 .addTypeBtn:hover {
@@ -261,6 +262,17 @@
 
 
 /* --- ОБЩИЕ СТИЛИ ДАШБОРДА --- */
+
+/* Base color reset for all admin UI */
+.adminHeader,
+.managerContainer,
+.createForm,
+.courseCard,
+.taskItem,
+.sectionBlock {
+  color: #111827;
+}
+
 .adminHeader {
   display: flex;
   justify-content: space-between;
@@ -467,6 +479,7 @@
   display: flex;
   background: white;
   z-index: 9999;
+  color: #111827;
 }
 
 .editorSidebar {
@@ -478,6 +491,7 @@
   overflow-y: auto;
   padding: 24px;
   box-sizing: border-box;
+  color: #111827;
 }
 
 .previewArea {
@@ -487,6 +501,7 @@
   overflow-y: auto;
   padding: 60px;
   box-sizing: border-box;
+  color: #111827;
 }
 
 
