@@ -97,7 +97,7 @@ const CourseSidebar = ({
 
       <ul className={cl.lessonList}>
         {lessons.map((lesson) => {
-          const isLocked = !lesson.isFree && !hasProAccess;
+          const isLocked = !lesson.is_free && !hasProAccess;
 
           return (
             <li
