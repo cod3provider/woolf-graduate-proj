@@ -19,8 +19,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
-            <Route path="course/:lessonSlug?" element={<Course />} />
-            {/*<Route path="course/:courseSlug/:lessonSlug?" element={<Course />} />*/}
+            <Route path="course/:courseSlug/:lessonSlug?" element={<Course />} />
             <Route path="my-learning" element={<MyLearning />} />
 
             <Route element={<AdminRoute />}>
