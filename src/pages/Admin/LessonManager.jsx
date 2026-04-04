@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { FaArrowLeft, FaPlus, FaTrash, FaFileAlt } from 'react-icons/fa';
+import { FaArrowLeft, FaPlus, FaTrash, FaFileAlt, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
 import { api } from "@/services/api.js";
 
@@ -9,6 +9,8 @@ import ContentEditor from "@pages/Admin/ContentEditor/ContentEditor.jsx";
 const LessonManager = ({ course, onBack }) => {
   const [lessons, setLessons] = useState([]);
   const [editingLesson, setEditingLesson] = useState(null);
+  const [editingMetaId, setEditingMetaId] = useState(null);
+  const [editingMeta, setEditingMeta] = useState({});
   const [isAddingLesson, setIsAddingLesson] = useState(false);
   const [newLesson, setNewLesson] = useState({ title: '', slug: '', order_index: 0, is_free: false });
 
@@ -24,6 +26,21 @@ const LessonManager = ({ course, onBack }) => {
   useEffect(() => {
     loadLessons();
   }, [loadLessons]);
+
+  const handleEditMeta = (lesson) => {
+    setEditingMetaId(lesson.id);
+    setEditingMeta({ title: lesson.title, slug: lesson.slug, is_free: lesson.is_free });
+  };
+
+  const handleSaveMeta = async (lessonId) => {
+    try {
+      await api.updateLesson(lessonId, editingMeta);
+      setEditingMetaId(null);
+      loadLessons();
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  };
 
   const handleCreateLesson = async (e) => {
     e.preventDefault();
@@ -102,38 +119,80 @@ const LessonManager = ({ course, onBack }) => {
 
         {lessons.map(lesson => (
           <div key={lesson.id} className={cl.courseCard}>
-            <div className={cl.courseInfo}>
-              <strong>{lesson.order_index}. {lesson.title}</strong>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <p className={cl.slug}>/{lesson.slug}</p>
-
-                {lesson.is_free ? (
-                  <span className={cl.freeBadge}>FREE</span>
-                ) : (
-                  <span className={cl.proBadge} style={{ background: '#eee', color: '#666' }}>PRO</span>
-                )}
+            {editingMetaId === lesson.id ? (
+              <div className={cl.courseInfo}>
+                <input
+                  value={editingMeta.title}
+                  onChange={e => setEditingMeta({...editingMeta, title: e.target.value})}
+                  placeholder="Title"
+                />
+                <input
+                  value={editingMeta.slug}
+                  onChange={e => setEditingMeta({...editingMeta, slug: e.target.value})}
+                  placeholder="slug"
+                />
+                <label className={cl.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={editingMeta.is_free}
+                    onChange={e => setEditingMeta({...editingMeta, is_free: e.target.checked})}
+                  />
+                  <span>Free lesson</span>
+                </label>
               </div>
-            </div>
+            ) : (
+              <div className={cl.courseInfo}>
+                <strong>{lesson.order_index}. {lesson.title}</strong>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <p className={cl.slug}>/{lesson.slug}</p>
+                  {lesson.is_free ? (
+                    <span className={cl.freeBadge}>FREE</span>
+                  ) : (
+                    <span className={cl.proBadge} style={{ background: '#eee', color: '#666' }}>PRO</span>
+                  )}
+                </div>
+              </div>
+            )}
             <div className={cl.actions}>
-              <button
-                className={cl.iconBtn}
-                title="Edit content (Split Screen)"
-                onClick={() => setEditingLesson(lesson)}
-              >
-                <FaFileAlt />
-              </button>
-              <button
-                className={`${cl.iconBtn} ${cl.delete}`}
-                title="Delete lesson"
-                onClick={async () => {
-                  if(window.confirm("Delete lesson with content?")) {
-                    await api.deleteLesson(lesson.id);
-                    loadLessons();
-                  }
-                }}
-              >
-                <FaTrash />
-              </button>
+              {editingMetaId === lesson.id ? (
+                <>
+                  <button className={cl.iconBtn} title="Save" onClick={() => handleSaveMeta(lesson.id)}>
+                    <FaCheck />
+                  </button>
+                  <button className={cl.iconBtn} title="Cancel" onClick={() => setEditingMetaId(null)}>
+                    <FaTimes />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className={cl.iconBtn}
+                    title="Edit metadata"
+                    onClick={() => handleEditMeta(lesson)}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className={cl.iconBtn}
+                    title="Edit content (Split Screen)"
+                    onClick={() => setEditingLesson(lesson)}
+                  >
+                    <FaFileAlt />
+                  </button>
+                  <button
+                    className={`${cl.iconBtn} ${cl.delete}`}
+                    title="Delete lesson"
+                    onClick={async () => {
+                      if(window.confirm("Delete lesson with content?")) {
+                        await api.deleteLesson(lesson.id);
+                        loadLessons();
+                      }
+                    }}
+                  >
+                    <FaTrash />
+                  </button>
+                </>
+              )}
             </div>
           </div>
         ))}
