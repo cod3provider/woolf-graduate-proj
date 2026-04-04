@@ -14,11 +14,11 @@ const AdminDashboard = () => {
   const [error, setError] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [editingCourseId, setEditingCourseId] = useState(null);
   const [newCourse, setNewCourse] = useState({
     title: "",
     slug: "",
     description: "",
-    is_free: false
   });
 
   const loadCourses = async () => {
@@ -51,15 +51,20 @@ const AdminDashboard = () => {
     );
   }
 
-  const handleCreateCourse = async (e) => {
+  const handleSubmitCourse = async (e) => {
     e.preventDefault();
     try {
-      await api.createCourse(newCourse);
-      setNewCourse({ title: "", slug: "", description: "", is_free: false });
+      if (editingCourseId) {
+        await api.updateCourse(editingCourseId, newCourse);
+      } else {
+        await api.createCourse(newCourse);
+      }
+      setNewCourse({ title: "", slug: "", description: "" });
       setShowCreateForm(false);
-      loadCourses(); // Перезагружаем список
+      setEditingCourseId(null);
+      loadCourses();
     } catch (err) {
-      alert("Error creating course: " + err.message);
+      alert("Error saving course: " + err.message);
     }
   };
 
@@ -86,7 +91,11 @@ const AdminDashboard = () => {
         </div>
         <button
           className={cl.addBtn}
-          onClick={() => setShowCreateForm(!showCreateForm)}
+          onClick={() => {
+            setShowCreateForm(!showCreateForm);
+            setEditingCourseId(null);
+            setNewCourse({ title: "", slug: "", description: "" });
+          }}
         >
           <FaPlus /> {showCreateForm ? "Cancel" : "Add New Course"}
         </button>
@@ -94,8 +103,8 @@ const AdminDashboard = () => {
 
 
       {showCreateForm && (
-        <form className={cl.createForm} onSubmit={handleCreateCourse}>
-          <h3>New Course Metadata</h3>
+        <form className={cl.createForm} onSubmit={handleSubmitCourse}>
+          <h3>{editingCourseId ? "Edit Course" : "New Course"}</h3>
           <div className={cl.formGrid}>
             <input
               type="text"
@@ -116,16 +125,10 @@ const AdminDashboard = () => {
               value={newCourse.description}
               onChange={e => setNewCourse({...newCourse, description: e.target.value})}
             />
-            <label className={cl.checkboxLabel}>
-              <input
-                type="checkbox"
-                checked={newCourse.is_free}
-                onChange={e => setNewCourse({...newCourse, is_free: e.target.checked})}
-              />
-              Is Free Course
-            </label>
           </div>
-          <button type="submit" className={cl.saveBtn}>Create Course</button>
+          <button type="submit" className={cl.saveBtn}>
+            {editingCourseId ? "Save Changes" : "Create Course"}
+          </button>
         </form>
       )}
 
@@ -136,9 +139,6 @@ const AdminDashboard = () => {
             <div className={cl.courseInfo}>
               <h3>{course.title}</h3>
               <p className={cl.slug}>/{course.slug}</p>
-              <span className={course.is_free ? cl.freeBadge : cl.proBadge}>
-                {course.is_free ? "Free" : "Pro"}
-              </span>
             </div>
 
             <div className={cl.actions}>
@@ -154,7 +154,8 @@ const AdminDashboard = () => {
                 className={cl.iconBtn}
                 title="Edit Metadata"
                 onClick={() => {
-                  setNewCourse(course);
+                  setNewCourse({ title: course.title, slug: course.slug, description: course.description || "" });
+                  setEditingCourseId(course.id);
                   setShowCreateForm(true);
                 }}
               >
