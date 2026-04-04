@@ -17,10 +17,17 @@ const blockMap = {
   diagram: DiagramBlock,
   calls: CallsBlock,
   explanation: ExplanationBlock,
-  practice: PracticeSection,
   realCode: RealCodeBlock,
   finishing: FinishingBlock,
 };
+
+const buildPracticeProps = (tasks = []) => ({
+  codingTasksProps:    { tasks: tasks.filter(t => t.task_type === 'code_check') },
+  predictOutputProps:  { tasks: tasks.filter(t => t.task_type === 'multiple_choice') },
+  reorderLinesProps:   { tasks: tasks.filter(t => t.task_type === 'reorder_lines') },
+  fillMissingLineProps: { tasks: [] },
+  findMistakeProps:    { tasks: [] },
+});
 
 const LessonRenderer = ({ lesson }) => {
   const sections = lesson?.sections || [];
@@ -32,8 +39,16 @@ const LessonRenderer = ({ lesson }) => {
   return (
     <>
       {sections.map((section, index) => {
-        const BlockComponent = blockMap[section.type];
+        if (section.type === 'practice') {
+          return (
+            <PracticeSection
+              key={`practice-${index}`}
+              {...buildPracticeProps(section.content?.tasks)}
+            />
+          );
+        }
 
+        const BlockComponent = blockMap[section.type];
         if (!BlockComponent) return null;
 
         return (
