@@ -48,7 +48,7 @@ const CourseSidebar = ({
 
           <li>
             <NavLink
-              to="/course"
+              to="/"
               className={({ isActive }) =>
                 `${cl.link} ${isActive ? cl.active : ""}`
               }

@@ -31,16 +31,6 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              <li className={cl.navItem}>
-                <NavLink
-                  className={({ isActive }) =>
-                    `${cl.link} ${isActive ? cl.active : ""}`
-                  }
-                  to="/course"
-                >
-                  Learn
-                </NavLink>
-              </li>
             </ul>
           </nav>
 
