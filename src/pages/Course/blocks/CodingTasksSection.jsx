@@ -177,9 +177,7 @@ const CodingTasksSection = ({
                 </button>
               </div>
 
-              {(state.output ||
-                state.error ||
-                state.stderr ||
+              {(state.status === "done" ||
                 state.status === "running") && (
                 <div className={cl.outputWrap}>
                   <div className={cl.outputTop}>

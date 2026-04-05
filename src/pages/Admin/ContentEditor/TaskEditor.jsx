@@ -75,21 +75,24 @@ const TaskEditor = ({ tasks, onChange }) => {
           />
 
           {task.task_type === "code_check" && (
-            <div className={cl.taskGrid}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <textarea
-                className={cl.codeAreaSmall}
-                placeholder="Starter code..."
+                className={`${cl.codeArea} ${cl.codeAreaSmall}`}
+                placeholder="Starter code (shown to student)"
+                rows={6}
                 value={task.config.starter_code}
                 onChange={e => updateConfig(idx, 'starter_code', e.target.value)}
               />
               <textarea
-                className={cl.codeAreaSmall}
-                placeholder="Solution..."
+                className={`${cl.codeArea} ${cl.codeAreaSmall}`}
+                placeholder="Solution (full working code)"
+                rows={6}
                 value={task.config.solution}
                 onChange={e => updateConfig(idx, 'solution', e.target.value)}
               />
-              <input
-                placeholder="Expected output"
+              <textarea
+                placeholder="Expected output (one line per print)"
+                rows={3}
                 value={task.config.expected_output}
                 onChange={e => updateConfig(idx, 'expected_output', e.target.value)}
               />
