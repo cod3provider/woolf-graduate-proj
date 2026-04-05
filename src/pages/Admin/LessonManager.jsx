@@ -156,32 +156,29 @@ const LessonManager = ({ course, onBack }) => {
             <div className={cl.actions}>
               {editingMetaId === lesson.id ? (
                 <>
-                  <button className={cl.iconBtn} title="Save" onClick={() => handleSaveMeta(lesson.id)}>
-                    <FaCheck />
+                  <button className={cl.iconBtn} onClick={() => handleSaveMeta(lesson.id)}>
+                    <FaCheck /> Save
                   </button>
-                  <button className={cl.iconBtn} title="Cancel" onClick={() => setEditingMetaId(null)}>
-                    <FaTimes />
+                  <button className={cl.iconBtn} onClick={() => setEditingMetaId(null)}>
+                    <FaTimes /> Cancel
                   </button>
                 </>
               ) : (
                 <>
                   <button
                     className={cl.iconBtn}
-                    title="Edit metadata"
                     onClick={() => handleEditMeta(lesson)}
                   >
-                    <FaEdit />
+                    <FaEdit /> Edit
                   </button>
                   <button
                     className={cl.iconBtn}
-                    title="Edit content (Split Screen)"
                     onClick={() => setEditingLesson(lesson)}
                   >
-                    <FaFileAlt />
+                    <FaFileAlt /> Content
                   </button>
                   <button
                     className={`${cl.iconBtn} ${cl.delete}`}
-                    title="Delete lesson"
                     onClick={async () => {
                       if(window.confirm("Delete lesson with content?")) {
                         await api.deleteLesson(lesson.id);
@@ -189,7 +186,7 @@ const LessonManager = ({ course, onBack }) => {
                       }
                     }}
                   >
-                    <FaTrash />
+                    <FaTrash /> Delete
                   </button>
                 </>
               )}

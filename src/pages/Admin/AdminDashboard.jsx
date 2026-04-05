@@ -145,29 +145,27 @@ const AdminDashboard = () => {
             <div className={cl.actions}>
               <button
                 className={cl.iconBtn}
-                title="Edit Lessons"
                 onClick={() => setSelectedCourse(course)}
               >
-                <FaBookOpen />
+                <FaBookOpen /> Lessons
               </button>
 
               <button
                 className={cl.iconBtn}
-                title="Edit Metadata"
                 onClick={() => {
                   setNewCourse({ title: course.title, slug: course.slug, description: course.description || "" });
                   setEditingCourseId(course.id);
                   setShowCreateForm(true);
                 }}
               >
-                <FaEdit />
+                <FaEdit /> Edit
               </button>
 
               <button
                 className={`${cl.iconBtn} ${cl.delete}`}
                 onClick={() => handleDelete(course.id)}
               >
-                <FaTrash />
+                <FaTrash /> Delete
               </button>
             </div>
           </div>
