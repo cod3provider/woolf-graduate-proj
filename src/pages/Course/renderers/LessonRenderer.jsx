@@ -37,7 +37,7 @@ const LessonRenderer = ({ lesson }) => {
           // new API format: flat tasks[] in content
           const practiceProps = section.props
             ? section.props
-            : buildPracticeProps(section.content?.tasks);
+            : buildPracticeProps(section.content?.tasks ?? section.tasks);
           return (
             <PracticeSection
               key={`practice-${index}`}

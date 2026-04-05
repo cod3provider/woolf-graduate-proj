@@ -12,13 +12,13 @@ export function transformTask(task) {
 
   if (task.task_type === 'multiple_choice') {
     const options = {};
-    (config.options || []).forEach((opt, i) => {
+    (config.options || []).filter(opt => opt.trim() !== '').forEach((opt, i) => {
       options[LETTERS[i]] = opt.split('\n').filter(l => l.trim() !== '');
     });
     const correct = typeof config.correct === 'number'
       ? LETTERS[config.correct]
       : config.correct;
-    return { ...rest, question: config.question, options, correct };
+    return { ...rest, code: config.code, question: config.question, options, correct };
   }
 
   if (task.task_type === 'code_check') {

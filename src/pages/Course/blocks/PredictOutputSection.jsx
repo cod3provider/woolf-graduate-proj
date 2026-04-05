@@ -38,16 +38,17 @@ const PredictOutputSection = ({
       <p className={cl.sectionText}>{description}</p>
 
       <div className={cl.tasksList}>
-        {tasks.map((task) => {
+        {tasks.map((task, taskIndex) => {
           const selected = selectedAnswers[task.id];
           const checked = checkedAnswers[task.id];
           const isCorrect = selected === task.correct;
+          const displayNum = taskIndex + 1;
 
           return (
             <article key={task.id} className={cl.taskCard}>
               <div className={cl.taskHeader}>
-                <span className={cl.taskNumber}>{task.id}</span>
-                <h3 className={cl.taskTitle}>Predict #{task.id}</h3>
+                <span className={cl.taskNumber}>{displayNum}</span>
+                <h3 className={cl.taskTitle}>Predict #{displayNum}</h3>
               </div>
 
               <div className={cl.codeWrap}>

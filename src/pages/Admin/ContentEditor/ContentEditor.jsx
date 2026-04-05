@@ -30,8 +30,14 @@ const SECTION_TYPES = [
   {value: "finishing", label: "Finishing", icon: "🏁"},
 ];
 
+const normalizeSections = (sections) => sections.map(s =>
+  s.type === 'practice'
+    ? {...s, content: {tasks: s.tasks || s.content?.tasks || []}}
+    : s
+);
+
 const ContentEditor = ({lesson, course, onBack}) => {
-  const [sections, setSections] = useState(lesson.sections || []);
+  const [sections, setSections] = useState(normalizeSections(lesson.sections || []));
   const [draggedIndex, setDraggedIndex] = useState(null);
 
   const updateSection = (index, field, value) => {
@@ -185,9 +191,10 @@ const ContentEditor = ({lesson, course, onBack}) => {
 
                 {section.type === 'practice' && (
                   <TaskEditor
-                    tasks={section.content.tasks || []}
+                    tasks={section.content?.tasks || []}
                     onChange={(newT) => {
                       const next = [...sections];
+                      if (!next[idx].content) next[idx].content = {};
                       next[idx].content.tasks = newT;
                       setSections(next);
                     }}

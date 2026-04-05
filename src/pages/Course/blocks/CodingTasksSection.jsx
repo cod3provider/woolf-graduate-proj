@@ -127,7 +127,7 @@ const CodingTasksSection = ({
 
       <div className={cl.tasksList}>
         {tasks.map((task) => {
-          const state = runState[task.id];
+          const state = runState[task.id] ?? { status: 'idle', output: '', stderr: '', error: '', passed: null };
 
           return (
             <article key={task.id} className={cl.taskCard}>
@@ -144,7 +144,7 @@ const CodingTasksSection = ({
                 </div>
 
                 <PythonEditor
-                  value={codeByTask[task.id]}
+                  value={codeByTask[task.id] ?? task.starterCode ?? ''}
                   onChange={(value) => handleCodeChange(task.id, value)}
                   height="360px"
                 />

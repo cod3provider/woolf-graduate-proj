@@ -2,7 +2,6 @@ import closureHero from "../../../../assets/1_Closure/Closure_hero.png";
 import closureCard from "../../../../assets/1_Closure/Closure_1.png";
 import closureFinish from "../../../../assets/1_Closure/Closure_final.png";
 
-
 const closureExampleCode = `def make_bun(kind):
     def add_jam(flavor):
         print(f"{kind} bun with {flavor}")
@@ -85,21 +84,9 @@ hot_noodles("noodles")
 hot_soup("soup")`,
     question: "What is printed?",
     options: {
-      A: [
-        "noodles: mild spicy",
-        "noodles: hot spicy",
-        "soup: hot spicy",
-      ],
-      B: [
-        "noodles: mild spicy",
-        "noodles: mild spicy",
-        "soup: mild spicy",
-      ],
-      C: [
-        "noodles: hot spicy",
-        "noodles: mild spicy",
-        "soup: hot spicy",
-      ],
+      A: ["noodles: mild spicy", "noodles: hot spicy", "soup: hot spicy"],
+      B: ["noodles: mild spicy", "noodles: mild spicy", "soup: mild spicy"],
+      C: ["noodles: hot spicy", "noodles: mild spicy", "soup: hot spicy"],
       D: ["Error"],
     },
     correct: "A",
@@ -412,14 +399,14 @@ const closureLessonData = {
   slug: "closure",
   sections: [
     {
-  type: "intro",
-  props: {
-    imageSrc: closureHero,
-    imageAlt: "Dreamy closure lesson hero illustration",
-    description:
-      "Closures help functions remember context. In real Python, this is useful in decorators, callbacks, factory functions, and small stateful tools.",
-  },
-},
+      type: "intro",
+      props: {
+        imageSrc: closureHero,
+        imageAlt: "Dreamy closure lesson hero illustration",
+        description:
+          "Closures help functions remember context. In real Python, this is useful in decorators, callbacks, factory functions, and small stateful tools.",
+      },
+    },
     {
       type: "theory",
       props: {
@@ -441,30 +428,30 @@ const closureLessonData = {
       },
     },
     {
-  type: "howItWorks",
-  props: {
-    badge: "In plain words",
-    title: "How it works",
-    steps: [
-      "make_bun(kind) runs once and creates the inner function add_jam.",
-      "add_jam(flavor) can use kind because it was captured from the outer function.",
-      "make_bun returns the add_jam function, so you can call it later.",
-      "The returned function remembers the kind you used — like saving a recipe.",
-    ],
-  },
-},
-{
-  type: "diagram",
-  props: {
-    burgerCard: closureCard,
-  },
-},
-{
-  type: "calls",
-  props: {
-    callsCode: closureCallsCode,
-  },
-},
+      type: "howItWorks",
+      props: {
+        badge: "In plain words",
+        title: "How it works",
+        steps: [
+          "make_bun(kind) runs once and creates the inner function add_jam.",
+          "add_jam(flavor) can use kind because it was captured from the outer function.",
+          "make_bun returns the add_jam function, so you can call it later.",
+          "The returned function remembers the kind you used — like saving a recipe.",
+        ],
+      },
+    },
+    {
+      type: "diagram",
+      props: {
+        burgerCard: closureCard,
+      },
+    },
+    {
+      type: "calls",
+      props: {
+        callsCode: closureCallsCode,
+      },
+    },
     {
       type: "explanation",
       props: {
@@ -546,18 +533,18 @@ const closureLessonData = {
       },
     },
     {
-  type: "finishing",
-  props: {
-    badge: "Done",
-    title: "Keep going!",
-    paragraphs: [
-      "You finished the closure lesson. Now you know how an inner function can remember values from the outer one.",
-      "That memory makes closures useful for reusable tools, counters, decorators, callbacks, and small factory functions.",
-    ],
-    imageSrc: closureFinish,
-    imageAlt: "Closure lesson completed illustration",
-  },
-},
+      type: "finishing",
+      props: {
+        badge: "Done",
+        title: "Keep going!",
+        paragraphs: [
+          "You finished the closure lesson. Now you know how an inner function can remember values from the outer one.",
+          "That memory makes closures useful for reusable tools, counters, decorators, callbacks, and small factory functions.",
+        ],
+        imageSrc: closureFinish,
+        imageAlt: "Closure lesson completed illustration",
+      },
+    },
   ],
 };
 

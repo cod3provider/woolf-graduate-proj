@@ -10,7 +10,7 @@ const TASK_TYPES = [
 
 const defaultConfig = {
   code_check: { starter_code: "", solution: "", expected_output: "" },
-  multiple_choice: { question: "", options: ["", ""], correct: 0 },
+  multiple_choice: { code: "", question: "", options: ["", ""], correct: 0 },
   reorder_lines: { lines: [""] },
 };
 
@@ -97,12 +97,22 @@ const TaskEditor = ({ tasks, onChange }) => {
           )}
 
           {task.task_type === "multiple_choice" && (
-            <div className={cl.taskGrid}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <textarea
+                className={cl.codeArea}
+                placeholder="Python code snippet..."
+                rows={5}
+                value={task.config.code}
+                onChange={e => updateConfig(idx, 'code', e.target.value)}
+              />
               <input
-                placeholder="Question"
+                placeholder="Question (e.g. What is printed?)"
                 value={task.config.question}
                 onChange={e => updateConfig(idx, 'question', e.target.value)}
               />
+              <p style={{ fontSize: '12px', color: '#6b7280', margin: '4px 0 0' }}>
+                Options — select radio to mark correct. Use newlines for multi-line output.
+              </p>
               {task.config.options.map((opt, oi) => (
                 <div key={oi} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <input
@@ -111,12 +121,13 @@ const TaskEditor = ({ tasks, onChange }) => {
                     checked={task.config.correct === oi}
                     onChange={() => updateConfig(idx, 'correct', oi)}
                     title="Mark as correct"
-                    style={{ marginTop: '8px' }}
+                    style={{ marginTop: '10px', flexShrink: 0, width: 'auto' }}
                   />
                   <textarea
-                    placeholder={`Option ${oi + 1} (one output line per line)`}
+                    placeholder={`Option ${oi + 1}`}
                     value={opt}
                     rows={2}
+                    style={{ flex: 1, minWidth: 0, width: 0 }}
                     onChange={e => {
                       const opts = [...task.config.options];
                       opts[oi] = e.target.value;
@@ -125,6 +136,7 @@ const TaskEditor = ({ tasks, onChange }) => {
                   />
                   <button
                     className={cl.deleteBtn}
+                    style={{ marginTop: '6px', flexShrink: 0 }}
                     onClick={() => {
                       const opts = task.config.options.filter((_, i) => i !== oi);
                       const correct = task.config.correct >= opts.length ? 0 : task.config.correct;
