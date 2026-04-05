@@ -104,17 +104,19 @@ const TaskEditor = ({ tasks, onChange }) => {
                 onChange={e => updateConfig(idx, 'question', e.target.value)}
               />
               {task.config.options.map((opt, oi) => (
-                <div key={oi} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <div key={oi} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <input
                     type="radio"
                     name={`correct-${idx}`}
                     checked={task.config.correct === oi}
                     onChange={() => updateConfig(idx, 'correct', oi)}
                     title="Mark as correct"
+                    style={{ marginTop: '8px' }}
                   />
-                  <input
-                    placeholder={`Option ${oi + 1}`}
+                  <textarea
+                    placeholder={`Option ${oi + 1} (one output line per line)`}
                     value={opt}
+                    rows={2}
                     onChange={e => {
                       const opts = [...task.config.options];
                       opts[oi] = e.target.value;

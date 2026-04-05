@@ -13,7 +13,7 @@ export function transformTask(task) {
   if (task.task_type === 'multiple_choice') {
     const options = {};
     (config.options || []).forEach((opt, i) => {
-      options[LETTERS[i]] = [opt];
+      options[LETTERS[i]] = opt.split('\n').filter(l => l.trim() !== '');
     });
     const correct = typeof config.correct === 'number'
       ? LETTERS[config.correct]
