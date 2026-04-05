@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {FaArrowLeft, FaSave, FaTrash, FaPlus, FaGripVertical, FaFileImport} from 'react-icons/fa';
 import TaskEditor from './TaskEditor';
 import {api} from "@/services/api.js";
+import {buildPracticeProps} from "@pages/Course/utils/transformTask.js";
 
 import cl from '../AdminDashboard.module.css';
 
@@ -239,14 +240,7 @@ const ContentEditor = ({lesson, course, onBack}) => {
                   );
                 }
 
-                const practiceProps = {
-                  codingTasksProps: { tasks: tasks?.filter(t => t.task_type === 'code_check') || [] },
-                  predictOutputProps: { tasks: tasks?.filter(t => t.task_type === 'multiple_choice') || [] },
-                  fillMissingLineProps: { tasks: [] },
-                  findMistakeProps: { tasks: [] },
-                  reorderLinesProps: { tasks: tasks?.filter(t => t.task_type === 'reorder_lines') || [] },
-                };
-                return <PracticeSection key={i} {...practiceProps} />;
+                return <PracticeSection key={i} {...buildPracticeProps(tasks)} />;
               }
 
               default:

@@ -8,6 +8,7 @@ import ExplanationBlock from "../blocks/ExplanationBlock";
 import PracticeSection from "../blocks/PracticeSection";
 import RealCodeBlock from "../blocks/RealCodeBlock";
 import FinishingBlock from "../blocks/FinishingBlock";
+import { buildPracticeProps } from "../utils/transformTask";
 
 const blockMap = {
   intro: LessonIntroBlock,
@@ -21,14 +22,6 @@ const blockMap = {
   finishing: FinishingBlock,
 };
 
-const buildPracticeProps = (tasks = []) => ({
-  codingTasksProps:    { tasks: tasks.filter(t => t.task_type === 'code_check') },
-  predictOutputProps:  { tasks: tasks.filter(t => t.task_type === 'multiple_choice') },
-  reorderLinesProps:   { tasks: tasks.filter(t => t.task_type === 'reorder_lines') },
-  fillMissingLineProps: { tasks: [] },
-  findMistakeProps:    { tasks: [] },
-});
-
 const LessonRenderer = ({ lesson }) => {
   const sections = lesson?.sections || [];
 
@@ -40,10 +33,15 @@ const LessonRenderer = ({ lesson }) => {
     <>
       {sections.map((section, index) => {
         if (section.type === 'practice') {
+          // old hardcoded format: props already categorized
+          // new API format: flat tasks[] in content
+          const practiceProps = section.props
+            ? section.props
+            : buildPracticeProps(section.content?.tasks);
           return (
             <PracticeSection
               key={`practice-${index}`}
-              {...buildPracticeProps(section.content?.tasks)}
+              {...practiceProps}
             />
           );
         }
@@ -54,7 +52,7 @@ const LessonRenderer = ({ lesson }) => {
         return (
           <BlockComponent
             key={`${section.type}-${index}`}
-            {...(section.content || {})}
+            {...(section.content || section.props || {})}
           />
         );
       })}
