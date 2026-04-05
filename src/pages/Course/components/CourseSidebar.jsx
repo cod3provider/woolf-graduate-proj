@@ -15,9 +15,7 @@ const CourseSidebar = ({
 }) => {
   const { logOut } = useAuth();
 
-  const completedOrCurrentCount = lessons.filter(
-    (lesson) => lesson.status === "passed" || lesson.status === "active"
-  ).length;
+  const completedOrCurrentCount = lessons.filter(l => l.isCompleted).length;
 
   const progressPercent = Math.round(
     (completedOrCurrentCount / lessons.length) * 100
@@ -113,8 +111,8 @@ const CourseSidebar = ({
               style={{ cursor: isLocked ? "not-allowed" : "pointer" }}
             >
               <div className={cl.lessonLeft}>
-                <span className={cl.lessonIcon}>
-                  {lesson.status === "passed" ? (
+                <span className={`${cl.lessonIcon} ${lesson.isCompleted ? cl.completedIcon : ''}`}>
+                  {lesson.isCompleted ? (
                     <FaCheck />
                   ) : isLocked ? (
                     <FaLock />

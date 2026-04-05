@@ -63,6 +63,12 @@
   white-space: nowrap;
 }
 
+.nextBtnDone {
+  background: #16a34a;
+  color: #ffffff;
+  cursor: default;
+}
+
 .resetBtn {
   margin-top: 16px;
   align-self: flex-start;

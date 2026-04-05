@@ -155,8 +155,9 @@
   color: #334155;
 }
 
-.passed .lessonIcon {
-  color: #22c55e;
+.passed .lessonIcon,
+.completedIcon {
+  color: #22c55e !important;
 }
 
 .active {

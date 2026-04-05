@@ -29,8 +29,8 @@ const Course = () => {
 
   const { user, loading: authLoading, openAuthModal } = useAuth();
   const { hasProAccess, grantProAccess } = useProAccess();
-  const { progress, completeLesson } = useCourseProgress(dbLessons.length);
-  const { completedLessonIds, highestUnlockedLessonId } = progress;
+  const courseId = dbLessons[0]?.course_id ?? null;
+  const { completedLessonIds, completeLesson } = useCourseProgress(courseId);
 
   const userInitial =
     user?.displayName?.trim()?.charAt(0)?.toUpperCase() ||
@@ -72,21 +72,28 @@ const Course = () => {
   }, [courseSlug, lessonSlug, dbLessons]);
 
   const lessons = useMemo(() => {
-    return dbLessons.map((lesson) => {
+    const lastCompletedIndex = dbLessons.reduce(
+      (max, l, i) => (completedLessonIds.includes(l.id) ? Math.max(max, i) : max),
+      -1
+    );
+
+    return dbLessons.map((lesson, index) => {
       const isLockedByAccess = !lesson.is_free && !hasProAccess;
       let status = "locked";
 
-      if (completedLessonIds.includes(lesson.id)) {
+      const isCompleted = completedLessonIds.includes(lesson.id);
+
+      if (isCompleted) {
         status = "passed";
-      } else if (!isLockedByAccess && (lesson.id <= highestUnlockedLessonId || lesson.is_free)) {
+      } else if (!isLockedByAccess && (lesson.is_free || index <= lastCompletedIndex + 2)) {
         status = "available";
       }
 
       if (lesson.slug === lessonSlug) status = "active";
 
-      return { ...lesson, status };
+      return { ...lesson, status, isCompleted };
     });
-  }, [dbLessons, completedLessonIds, highestUnlockedLessonId, hasProAccess, lessonSlug]);
+  }, [dbLessons, completedLessonIds, hasProAccess, lessonSlug]);
 
   const activeLessonIndex = lessons.findIndex(l => l.slug === lessonSlug);
   const activeLesson = lessons[activeLessonIndex] ?? dbLessons[0];
@@ -169,13 +176,20 @@ const Course = () => {
 
           <button
             type="button"
-            className={cl.nextBtn}
+            className={`${cl.nextBtn} ${completedLessonIds.includes(activeLesson.id) && !nextLesson ? cl.nextBtnDone : ''}`}
             onClick={() => {
               completeLesson(activeLesson.id);
               if (nextLesson) navigate(`/course/${courseSlug}/${nextLesson.slug}`);
             }}
+            disabled={completedLessonIds.includes(activeLesson.id) && !nextLesson}
           >
-            <span>{!nextLesson ? "Mark as Completed" : "Complete & Next"}</span>
+            <span>
+              {completedLessonIds.includes(activeLesson.id) && !nextLesson
+                ? "Completed!"
+                : !nextLesson
+                ? "Mark as Completed"
+                : "Complete & Next"}
+            </span>
             {nextLesson && <FaArrowRight />}
           </button>
         </div>

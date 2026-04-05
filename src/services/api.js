@@ -67,6 +67,9 @@ export const api = {
   getCourses: () => fetchOptionalAuth("/courses"),
   getLesson: (courseSlug, lessonSlug) => fetchWithAuth(`/courses/${courseSlug}/lessons/${lessonSlug}`),
 
+  getCourseProgress: (courseId) => fetchWithAuth(`/progress/courses/${courseId}`),
+  completeLesson: (lessonId) => fetchWithAuth(`/progress/lessons/${lessonId}/complete`, { method: "POST" }),
+
   getCourseLessonsBySlug: (courseSlug) =>
     fetchWithAuth(`/courses/${courseSlug}/lessons`),
 
