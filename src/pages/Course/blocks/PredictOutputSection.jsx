@@ -14,14 +14,16 @@ const PredictOutputSection = ({
   const [checkedAnswers, setCheckedAnswers] = useState({});
 
   const handleSelect = (taskId, optionKey) => {
-    setSelectedAnswers((prev) => ({
-      ...prev,
-      [taskId]: optionKey,
-    }));
+    setSelectedAnswers((prev) => {
+      const current = prev[taskId] || new Set();
+      const next = new Set(current);
+      next.has(optionKey) ? next.delete(optionKey) : next.add(optionKey);
+      return { ...prev, [taskId]: next };
+    });
   };
 
   const handleCheck = (taskId) => {
-    if (!selectedAnswers[taskId]) return;
+    if (!selectedAnswers[taskId]?.size) return;
 
     setCheckedAnswers((prev) => ({
       ...prev,
@@ -39,9 +41,12 @@ const PredictOutputSection = ({
 
       <div className={cl.tasksList}>
         {tasks.map((task, taskIndex) => {
-          const selected = selectedAnswers[task.id];
+          const selected = selectedAnswers[task.id] || new Set();
           const checked = checkedAnswers[task.id];
-          const isCorrect = selected === task.correct;
+          const correctArr = Array.isArray(task.correct) ? task.correct : [task.correct];
+          const isCorrect =
+            correctArr.length === selected.size &&
+            correctArr.every(k => selected.has(k));
           const displayNum = taskIndex + 1;
 
           return (
@@ -88,13 +93,13 @@ const PredictOutputSection = ({
                     key={key}
                     type="button"
                     className={`${cl.optionBtn} ${
-                      selected === key ? cl.selectedOption : ""
+                      selected.has(key) ? cl.selectedOption : ""
                     } ${
-                      checked && key === task.correct ? cl.correctOption : ""
+                      checked && correctArr.includes(key) ? cl.correctOption : ""
                     } ${
                       checked &&
-                      selected === key &&
-                      selected !== task.correct
+                      selected.has(key) &&
+                      !correctArr.includes(key)
                         ? cl.wrongOption
                         : ""
                     }`}
@@ -118,7 +123,7 @@ const PredictOutputSection = ({
                   type="button"
                   className={cl.checkBtn}
                   onClick={() => handleCheck(task.id)}
-                  disabled={!selected}
+                  disabled={!selected.size}
                 >
                   Check answer
                 </button>
@@ -131,7 +136,7 @@ const PredictOutputSection = ({
                   >
                     {isCorrect
                       ? "Correct!"
-                      : `Not quite. Correct answer: ${task.correct}`}
+                      : `Not quite. Correct answer: ${correctArr.join(' or ')}`}
                   </p>
                 )}
               </div>

@@ -10,7 +10,7 @@ const TASK_TYPES = [
 
 const defaultConfig = {
   code_check: { starter_code: "", solution: "", expected_output: "" },
-  multiple_choice: { code: "", question: "", options: ["", ""], correct: 0 },
+  multiple_choice: { code: "", question: "", options: ["", ""], correct: [] },
   reorder_lines: { lines: [""] },
 };
 
@@ -111,15 +111,18 @@ const TaskEditor = ({ tasks, onChange }) => {
                 onChange={e => updateConfig(idx, 'question', e.target.value)}
               />
               <p style={{ fontSize: '12px', color: '#6b7280', margin: '4px 0 0' }}>
-                Options — select radio to mark correct. Use newlines for multi-line output.
+                Options — check to mark correct (multiple allowed). Use newlines for multi-line output.
               </p>
               {task.config.options.map((opt, oi) => (
                 <div key={oi} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <input
-                    type="radio"
-                    name={`correct-${idx}`}
-                    checked={task.config.correct === oi}
-                    onChange={() => updateConfig(idx, 'correct', oi)}
+                    type="checkbox"
+                    checked={(Array.isArray(task.config.correct) ? task.config.correct : []).includes(oi)}
+                    onChange={e => {
+                      const prev = Array.isArray(task.config.correct) ? task.config.correct : [];
+                      const next = e.target.checked ? [...prev, oi] : prev.filter(i => i !== oi);
+                      updateConfig(idx, 'correct', next);
+                    }}
                     title="Mark as correct"
                     style={{ marginTop: '10px', flexShrink: 0, width: 'auto' }}
                   />
@@ -139,7 +142,7 @@ const TaskEditor = ({ tasks, onChange }) => {
                     style={{ marginTop: '6px', flexShrink: 0 }}
                     onClick={() => {
                       const opts = task.config.options.filter((_, i) => i !== oi);
-                      const correct = task.config.correct >= opts.length ? 0 : task.config.correct;
+                      const correct = (Array.isArray(task.config.correct) ? task.config.correct : []).filter(i => i !== oi).map(i => i > oi ? i - 1 : i);
                       const updated = [...tasks];
                       updated[idx] = { ...updated[idx], config: { ...updated[idx].config, options: opts, correct } };
                       onChange(updated);

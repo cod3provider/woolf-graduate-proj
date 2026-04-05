@@ -15,9 +15,10 @@ export function transformTask(task) {
     (config.options || []).filter(opt => opt.trim() !== '').forEach((opt, i) => {
       options[LETTERS[i]] = opt.split('\n').filter(l => l.trim() !== '');
     });
-    const correct = typeof config.correct === 'number'
-      ? LETTERS[config.correct]
-      : config.correct;
+    const correctRaw = config.correct ?? [];
+    const correct = Array.isArray(correctRaw)
+      ? correctRaw.map(i => LETTERS[i])
+      : [LETTERS[correctRaw]];
     return { ...rest, code: config.code, question: config.question, options, correct };
   }
 
