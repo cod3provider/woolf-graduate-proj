@@ -43,7 +43,7 @@ const ContentEditor = ({lesson, course, onBack}) => {
     const defaults = {
       intro: {description: '', imageSrc: ''},
       theory: {title: '', paragraphs: ['']},
-      realCode: {title: '', code: '', introParagraphs: [], listItems: []},
+      realCode: {title: '', code: '', introParagraphs: [], listItems: [], miniTitle: '', exampleParagraphs: [], outroParagraphs: [], calloutTitle: '', calloutParagraphs: []},
       practice: {tasks: []},
       diagram: {burgerCard: ''},
       calls: {callsCode: ''},
@@ -141,11 +141,30 @@ const ContentEditor = ({lesson, course, onBack}) => {
                   <div className={cl.nestedFields}>
                     <input placeholder="Title" value={section.content.title || ''}
                            onChange={e => updateSection(idx, 'title', e.target.value)}/>
-                    <textarea className={cl.codeArea} placeholder="Code" value={section.content.code || ''}
-                              onChange={e => updateSection(idx, 'code', e.target.value)}/>
-                    <textarea placeholder="Список особенностей (listItems)"
-                              value={section.content.listItems?.join('\n')}
+                    <textarea placeholder="Intro paragraphs (one per line)"
+                              value={section.content.introParagraphs?.join('\n') || ''}
+                              onChange={e => updateSection(idx, 'introParagraphs', e.target.value.split('\n'))}/>
+                    <textarea placeholder="List items (one per line)"
+                              value={section.content.listItems?.join('\n') || ''}
                               onChange={e => updateSection(idx, 'listItems', e.target.value.split('\n'))}/>
+                    <input placeholder="Mini title (e.g. Real example: timing a function)"
+                           value={section.content.miniTitle || ''}
+                           onChange={e => updateSection(idx, 'miniTitle', e.target.value)}/>
+                    <textarea placeholder="Example paragraphs (one per line)"
+                              value={section.content.exampleParagraphs?.join('\n') || ''}
+                              onChange={e => updateSection(idx, 'exampleParagraphs', e.target.value.split('\n'))}/>
+                    <textarea className={cl.codeArea} placeholder="Code"
+                              value={section.content.code || ''}
+                              onChange={e => updateSection(idx, 'code', e.target.value)}/>
+                    <textarea placeholder="Outro paragraphs (one per line)"
+                              value={section.content.outroParagraphs?.join('\n') || ''}
+                              onChange={e => updateSection(idx, 'outroParagraphs', e.target.value.split('\n'))}/>
+                    <input placeholder="Callout title (e.g. What's the decorator here?)"
+                           value={section.content.calloutTitle || ''}
+                           onChange={e => updateSection(idx, 'calloutTitle', e.target.value)}/>
+                    <textarea placeholder="Callout paragraphs (one per line)"
+                              value={section.content.calloutParagraphs?.join('\n') || ''}
+                              onChange={e => updateSection(idx, 'calloutParagraphs', e.target.value.split('\n'))}/>
                   </div>
                 )}
 
@@ -222,10 +241,10 @@ const ContentEditor = ({lesson, course, onBack}) => {
 
                 const practiceProps = {
                   codingTasksProps: { tasks: tasks?.filter(t => t.task_type === 'code_check') || [] },
-                  predictOutputProps: { tasks: tasks?.filter(t => t.task_type === 'predict') || [] },
-                  fillMissingLineProps: { tasks: tasks?.filter(t => t.task_type === 'fill_line') || [] },
-                  findMistakeProps: { tasks: tasks?.filter(t => t.task_type === 'mistake') || [] },
-                  reorderLinesProps: { tasks: tasks?.filter(t => t.task_type === 'reorder') || [] },
+                  predictOutputProps: { tasks: tasks?.filter(t => t.task_type === 'multiple_choice') || [] },
+                  fillMissingLineProps: { tasks: [] },
+                  findMistakeProps: { tasks: [] },
+                  reorderLinesProps: { tasks: tasks?.filter(t => t.task_type === 'reorder_lines') || [] },
                 };
                 return <PracticeSection key={i} {...practiceProps} />;
               }
