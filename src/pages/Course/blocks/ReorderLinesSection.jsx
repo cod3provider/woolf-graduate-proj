@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -20,17 +20,17 @@ import { CSS } from "@dnd-kit/utilities";
 
 import cl from "./ReorderLinesSection.module.css";
 
-function LinePreview({ index, text, overlay = false }) {
+function LinePreview({ pos, text, overlay = false }) {
   return (
     <div className={`${cl.lineCard} ${overlay ? cl.overlayCard : ""}`}>
       <span className={cl.dragHandle}>⋮⋮</span>
-      <span className={cl.lineIndex}>{index + 1}</span>
+      <span className={cl.lineIndex}>{pos}</span>
       <code className={cl.lineCode}>{text}</code>
     </div>
   );
 }
 
-function SortableLine({ id, index, text }) {
+function SortableLine({ id, pos, text }) {
   const {
     attributes,
     listeners,
@@ -52,16 +52,26 @@ function SortableLine({ id, index, text }) {
       className={`${cl.sortableWrap} ${isDragging ? cl.sortableDragging : ""}`}
     >
       <div className={cl.handleArea} {...attributes} {...listeners}>
-        <LinePreview index={index} text={text} />
+        <LinePreview pos={pos} text={text} />
       </div>
     </div>
   );
 }
 
-function ReorderTaskCard({ task }) {
+function ReorderTaskCard({ task, displayNum }) {
   const [items, setItems] = useState(task.lines);
   const [activeId, setActiveId] = useState(null);
   const [result, setResult] = useState(null);
+
+  // Sync when lines are added/removed (e.g. in admin preview)
+  useEffect(() => {
+    setItems(prev => {
+      const prevIds = new Set(prev.map(i => i.id));
+      const newLines = task.lines.filter(l => !prevIds.has(l.id));
+      const kept = prev.filter(i => task.lines.some(l => l.id === i.id));
+      return [...kept, ...newLines];
+    });
+  }, [task.lines]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -133,11 +143,11 @@ function ReorderTaskCard({ task }) {
   return (
     <article className={cl.taskCard}>
       <div className={cl.taskHeader}>
-        <span className={cl.taskNumber}>{task.id}</span>
-        <h3 className={cl.taskTitle}>Reorder #{task.id}</h3>
+        <span className={cl.taskNumber}>{displayNum}</span>
+        <h3 className={cl.taskTitle}>{task.title || `Reorder #${displayNum}`}</h3>
       </div>
 
-      <p className={cl.taskSubtitle}>{task.title}</p>
+      {task.description && <p className={cl.taskSubtitle}>{task.description}</p>}
 
       <DndContext
         sensors={sensors}
@@ -148,11 +158,11 @@ function ReorderTaskCard({ task }) {
       >
         <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
           <div className={cl.orderList}>
-            {items.map((line, index) => (
+            {items.map((line) => (
               <SortableLine
                 key={line.id}
                 id={line.id}
-                index={index}
+                pos={line.pos}
                 text={line.text}
               />
             ))}
@@ -162,7 +172,7 @@ function ReorderTaskCard({ task }) {
         <DragOverlay>
           {activeItem ? (
             <LinePreview
-              index={items.findIndex((item) => item.id === activeItem.id)}
+              pos={activeItem.pos}
               text={activeItem.text}
               overlay
             />
@@ -208,8 +218,8 @@ const ReorderLinesSection = ({
       <p className={cl.sectionText}>{description}</p>
 
       <div className={cl.tasksList}>
-        {tasks.map((task) => (
-          <ReorderTaskCard key={task.id} task={task} />
+        {tasks.map((task, taskIndex) => (
+          <ReorderTaskCard key={task.id} task={task} displayNum={taskIndex + 1} />
         ))}
       </div>
     </div>

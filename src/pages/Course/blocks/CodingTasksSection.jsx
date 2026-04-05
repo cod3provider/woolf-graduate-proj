@@ -126,13 +126,13 @@ const CodingTasksSection = ({
       {description && <p className={cl.sectionText}>{description}</p>}
 
       <div className={cl.tasksList}>
-        {tasks.map((task) => {
+        {tasks.map((task, taskIndex) => {
           const state = runState[task.id] ?? { status: 'idle', output: '', stderr: '', error: '', passed: null };
 
           return (
             <article key={task.id} className={cl.taskCard}>
               <div className={cl.taskHeader}>
-                <span className={cl.taskNumber}>{task.id}</span>
+                <span className={cl.taskNumber}>{taskIndex + 1}</span>
                 <h3 className={cl.taskTitle}>{task.title}</h3>
               </div>
 

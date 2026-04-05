@@ -33,17 +33,10 @@ const LessonRenderer = ({ lesson }) => {
     <>
       {sections.map((section, index) => {
         if (section.type === 'practice') {
-          // old hardcoded format: props already categorized
-          // new API format: flat tasks[] in content
           const practiceProps = section.props
             ? section.props
             : buildPracticeProps(section.content?.tasks ?? section.tasks);
-          return (
-            <PracticeSection
-              key={`practice-${index}`}
-              {...practiceProps}
-            />
-          );
+          return <PracticeSection key={`practice-${index}`} {...practiceProps} />;
         }
 
         const BlockComponent = blockMap[section.type];

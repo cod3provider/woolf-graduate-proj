@@ -1,5 +1,6 @@
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+
 /**
  * Transforms a task from the API/admin format (config nested object)
  * to the flat format expected by the practice block components.
@@ -32,8 +33,17 @@ export function transformTask(task) {
   }
 
   if (task.task_type === 'reorder_lines') {
-    const lines = (config.lines || []).map((text, i) => ({ id: String(i + 1), text }));
-    const correctOrder = lines.map(l => l.id);
+    const raw = config.lines || [];
+    // Support both old string format and new {text, pos} format
+    const normalized = raw.map((l, i) => ({
+      id: String(i + 1),
+      text: typeof l === 'string' ? l : (l.text ?? ''),
+      pos: typeof l === 'string' ? (i + 1) : (l.pos ?? i + 1),
+    }));
+    // correctOrder = admin-entered sequence (admin writes lines in the correct code order)
+    const correctOrder = normalized.map(l => l.id);
+    // Display lines sorted by pos — this scrambles them from the correct order
+    const lines = [...normalized].sort((a, b) => a.pos - b.pos);
     return { ...rest, lines, correctOrder };
   }
 

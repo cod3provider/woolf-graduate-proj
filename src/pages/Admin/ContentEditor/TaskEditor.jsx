@@ -11,7 +11,7 @@ const TASK_TYPES = [
 const defaultConfig = {
   code_check: { starter_code: "", solution: "", expected_output: "" },
   multiple_choice: { code: "", question: "", options: ["", ""], correct: [] },
-  reorder_lines: { lines: [""] },
+  reorder_lines: { lines: [{ text: "", pos: 1 }] },
 };
 
 const TaskEditor = ({ tasks, onChange }) => {
@@ -53,7 +53,7 @@ const TaskEditor = ({ tasks, onChange }) => {
             <input
               value={task.title}
               onChange={e => updateTask(idx, 'title', e.target.value)}
-              placeholder="Task title"
+              placeholder="Task title (shown as subtitle in preview)"
             />
             <select
               value={task.task_type}
@@ -69,7 +69,7 @@ const TaskEditor = ({ tasks, onChange }) => {
           </div>
 
           <textarea
-            placeholder="Description..."
+            placeholder="Description (shown below title)"
             value={task.description}
             onChange={e => updateTask(idx, 'description', e.target.value)}
           />
@@ -162,15 +162,30 @@ const TaskEditor = ({ tasks, onChange }) => {
           )}
 
           {task.task_type === "reorder_lines" && (
-            <div className={cl.taskGrid}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <p style={{ fontSize: '12px', color: '#6b7280', margin: '0' }}>
+                Enter each line of code. Set its correct position number (1 = first line in the solution).
+              </p>
               {task.config.lines.map((line, li) => (
                 <div key={li} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <input
-                    placeholder={`Line ${li + 1}`}
-                    value={line}
+                    type="number"
+                    min={1}
+                    value={line.pos ?? li + 1}
+                    style={{ width: '50px', flexShrink: 0 }}
                     onChange={e => {
                       const lines = [...task.config.lines];
-                      lines[li] = e.target.value;
+                      lines[li] = { ...lines[li], pos: Number(e.target.value) };
+                      updateConfig(idx, 'lines', lines);
+                    }}
+                  />
+                  <input
+                    placeholder={`Code line ${li + 1}`}
+                    value={line.text ?? line}
+                    style={{ flex: 1, minWidth: 0, width: 0 }}
+                    onChange={e => {
+                      const lines = [...task.config.lines];
+                      lines[li] = { ...lines[li], text: e.target.value };
                       updateConfig(idx, 'lines', lines);
                     }}
                   />
@@ -184,7 +199,7 @@ const TaskEditor = ({ tasks, onChange }) => {
               ))}
               <button
                 className={cl.addTaskBtn}
-                onClick={() => updateConfig(idx, 'lines', [...task.config.lines, ""])}
+                onClick={() => updateConfig(idx, 'lines', [...task.config.lines, { text: "", pos: task.config.lines.length + 1 }])}
               >
                 <FaPlus /> Add line
               </button>
