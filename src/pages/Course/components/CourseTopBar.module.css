@@ -44,25 +44,40 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-.smallBuyBtn {
+.smallBuyBtn,
+.guideBtn {
   height: 40px;
   padding: 0 18px;
   border-radius: 999px;
-  border: 1px solid #f4af25;
-  background: transparent;
-  color: #f4af25;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.smallBuyBtn {
+  border: 1px solid #f4af25;
+  background: transparent;
+  color: #f4af25;
+}
+
+.guideBtn {
+  border: 1px solid rgba(83, 91, 242, 0.18);
+  background: rgba(83, 91, 242, 0.08);
+  color: #535bf2;
+}
+
+.guideBtn:hover {
+  background: rgba(83, 91, 242, 0.14);
 }
 
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #f4af25;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -92,7 +107,8 @@
     font-size: 22px;
   }
 
-  .smallBuyBtn {
+  .smallBuyBtn,
+  .guideBtn {
     height: 36px;
     padding: 0 14px;
     font-size: 13px;
@@ -123,7 +139,8 @@
     font-size: 18px;
   }
 
-  .smallBuyBtn {
+  .smallBuyBtn,
+  .guideBtn {
     height: 34px;
     padding: 0 12px;
     font-size: 12px;
