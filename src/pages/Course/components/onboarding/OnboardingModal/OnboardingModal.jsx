@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import cl from "./OnboardingModal.module.css";
 
-import onboarding1 from "../../../../assets/onboarding_1.png";
-import onboarding2 from "../../../../assets/onboarding_2.png";
-import onboarding3 from "../../../../assets/onboarding_3.png";
-import onboarding4 from "../../../../assets/onboarding_4.png";
+import onboarding1 from "../../../../../assets/onboarding_1.png";
+import onboarding2 from "../../../../../assets/onboarding_2.png";
+import onboarding3 from "../../../../../assets/onboarding_3.png";
+import onboarding4 from "../../../../../assets/onboarding_4.png";
 
 const ONBOARDING_STORAGE_KEY = "tasty-python-onboarding-seen";
 
