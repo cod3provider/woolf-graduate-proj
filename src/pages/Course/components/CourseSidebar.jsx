@@ -1,5 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { FaCheck, FaHome, FaLock, FaRegUserCircle } from "react-icons/fa";
+import {
+  FaCheck,
+  FaHome,
+  FaLock,
+  FaRegUserCircle,
+} from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 
 import { useAuth } from "../../../context/AuthContext.jsx";
@@ -71,6 +76,8 @@ const CourseSidebar = ({
               <p className={cl.sideNavText}>My Learning</p>
             </NavLink>
           </li>
+
+          
         </ul>
       </nav>
 

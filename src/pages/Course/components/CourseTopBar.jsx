@@ -14,6 +14,10 @@ const CourseTopBar = ({
 }) => {
   const shouldShowPhoto = avatarMode === "photo" && !!userPhoto;
 
+  const handleGuideOpen = () => {
+    window.dispatchEvent(new CustomEvent("open-onboarding"));
+  };
+
   return (
     <div className={cl.topBar}>
       <div className={cl.topBarLeft}>
@@ -42,6 +46,14 @@ const CourseTopBar = ({
             Buy Course
           </button>
         )}
+
+        <button
+          type="button"
+          className={cl.guideBtn}
+          onClick={handleGuideOpen}
+        >
+          Guide
+        </button>
 
         <div
           className={cl.avatar}
