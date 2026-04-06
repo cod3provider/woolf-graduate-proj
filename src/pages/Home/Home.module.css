@@ -218,6 +218,11 @@
   flex-direction: column;
   gap: 24px;
 
+  .actionBtn {
+  cursor: pointer;
+  appearance: none;
+}
+
   @media (900px <= width) {
     flex-direction: row;
 

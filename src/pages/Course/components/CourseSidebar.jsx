@@ -1,4 +1,7 @@
-import { FaCheck, FaLock } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { FaCheck, FaHome, FaLock, FaRegUserCircle } from "react-icons/fa";
+import { PiStudentBold } from "react-icons/pi";
+
 import { useAuth } from "../../../context/AuthContext.jsx";
 import cl from "./CourseSidebar.module.css";
 
@@ -31,13 +34,51 @@ const CourseSidebar = ({
 
   return (
     <aside className={`${cl.sidebar} ${isSidebarOpen ? cl.sidebarOpen : ""}`}>
+      <nav className={cl.sideNav}>
+        <ul className={cl.sideNavList}>
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `${cl.link} ${isActive ? cl.active : ""}`
+              }
+            >
+              <FaHome />
+              <p className={cl.sideNavText}>Home</p>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/course"
+              className={({ isActive }) =>
+                `${cl.link} ${isActive ? cl.active : ""}`
+              }
+            >
+              <PiStudentBold />
+              <p className={cl.sideNavText}>Courses</p>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/my-learning"
+              className={({ isActive }) =>
+                `${cl.link} ${isActive ? cl.active : ""}`
+              }
+            >
+              <FaRegUserCircle />
+              <p className={cl.sideNavText}>My Learning</p>
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+
       <div className={cl.sidebarHeader}>
         <div>
           <h2 className={cl.sidebarTitle}>Tasty Python</h2>
           <p className={cl.sidebarSubtitle}>Course Progress</p>
         </div>
-
-        
       </div>
 
       <div className={cl.progressInfo}>
