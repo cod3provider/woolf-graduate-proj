@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import cl from "./OnboardingModal.module.css";
 
+import onboarding1 from "../../../../assets/onboarding_1.png";
+import onboarding2 from "../../../../assets/onboarding_2.png";
+import onboarding3 from "../../../../assets/onboarding_3.png";
+import onboarding4 from "../../../../assets/onboarding_4.png";
+
 const ONBOARDING_STORAGE_KEY = "tasty-python-onboarding-seen";
-const ONBOARDING_IMAGE_3 = "/src/assets/onboarding_3.png";
-const ONBOARDING_IMAGE_1 = "/src/assets/onboarding_1.png";
-const ONBOARDING_IMAGE_2 = "/src/assets/onboarding_2.png";
-const ONBOARDING_IMAGE_4 = "/src/assets/onboarding_4.png";
 
 const slides = [
   {
@@ -15,7 +16,7 @@ const slides = [
       "This app is designed for learners who already know the basics of Python and want to prepare for junior-level interviews more confidently.",
       "It is not a full beginner course from zero. It works best for users who want to revise tricky topics, organize what they already know, and practise explaining Python concepts more clearly.",
     ],
-    imageSrc: ONBOARDING_IMAGE_1,
+    imageSrc: onboarding1,
     imageAlt: "Studying",
   },
   {
@@ -26,7 +27,7 @@ const slides = [
       "If a lesson feels difficult, that is normal. Come back to it later, repeat it, and let the idea settle in your mind step by step.",
       "Short, focused sessions usually work better than trying to complete everything at once.",
     ],
-    imageSrc: ONBOARDING_IMAGE_2,
+    imageSrc: onboarding2,
     imageAlt: "Questions",
   },
   {
@@ -37,7 +38,7 @@ const slides = [
       "That is why this course uses vivid, tasty metaphors and simple mental images to make difficult ideas easier to grasp.",
       "The goal is not to replace formal learning, but to help you understand the logic behind the topic before moving to more technical examples.",
     ],
-    imageSrc: ONBOARDING_IMAGE_3,
+    imageSrc: onboarding3,
     imageAlt: "Cozy Tasty Python illustration",
   },
   {
@@ -48,7 +49,7 @@ const slides = [
       "Your progress is saved as you move through the course.",
       "If the format works well for you, you can unlock the full course and continue with premium lessons later.",
     ],
-    imageSrc: ONBOARDING_IMAGE_4,
+    imageSrc: onboarding4,
     imageAlt: "New horizons",
   },
 ];
