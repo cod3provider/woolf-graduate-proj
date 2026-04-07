@@ -53,8 +53,9 @@ const PredictOutputSection = ({
             <article key={task.id} className={cl.taskCard}>
               <div className={cl.taskHeader}>
                 <span className={cl.taskNumber}>{displayNum}</span>
-                <h3 className={cl.taskTitle}>Predict #{displayNum}</h3>
+                <h3 className={cl.taskTitle}>{task.title || `Predict #${displayNum}`}</h3>
               </div>
+              {task.description && <p className={cl.taskDescription}>{task.description}</p>}
 
               <div className={cl.codeWrap}>
                 <SyntaxHighlighter

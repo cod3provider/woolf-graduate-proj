@@ -74,6 +74,12 @@
   color: #0f172a;
 }
 
+.taskDescription {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: #64748b;
+}
+
 .codeWrap {
   overflow: hidden;
   border-radius: 20px;
