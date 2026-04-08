@@ -90,14 +90,14 @@ const AdminDashboard = () => {
           <p className={cl.subtitle}>Manage your courses and learning content</p>
         </div>
         <button
-          className={cl.addBtn}
+          className={showCreateForm ? `${cl.button} ${cl.cancelButton}` : `${cl.addBtn} ${cl.button}`}
           onClick={() => {
             setShowCreateForm(!showCreateForm);
             setEditingCourseId(null);
             setNewCourse({ title: "", slug: "", description: "" });
           }}
         >
-          <FaPlus /> {showCreateForm ? "Cancel" : "Add New Course"}
+          <FaPlus className={`${cl.icon} ${showCreateForm ? cl.rotated : ""}`} /> {showCreateForm ? "Cancel" : "Add New Course"}
         </button>
       </div>
 
