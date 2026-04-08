@@ -65,6 +65,7 @@ const Course = () => {
 
     const fetchFullLesson = async () => {
       try {
+        setCurrentFullLesson(null);
         const data = await api.getFullLesson(courseSlug, lessonSlug);
         setCurrentFullLesson(data);
       } catch (err) {
