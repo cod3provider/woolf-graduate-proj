@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { api } from "@/services/api.js";
 import cl from "./PaymentModal.module.css";
 
 const onlyDigits = (value) => value.replace(/\D/g, "");
@@ -18,6 +19,7 @@ const PaymentModal = ({
   isOpen,
   onClose,
   onPaymentSuccess,
+  courseId,
 }) => {
   const [form, setForm] = useState({
     cardNumber: "",
@@ -27,6 +29,7 @@ const PaymentModal = ({
   });
   const [error, setError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isFormFilled = useMemo(() => {
     return (
@@ -48,6 +51,7 @@ const PaymentModal = ({
     });
     setError("");
     setIsSuccess(false);
+    setIsSubmitting(false);
   };
 
   const handleClose = () => {
@@ -96,8 +100,13 @@ const PaymentModal = ({
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!courseId) {
+      setError("Technical error: Course ID not found. Please refresh the page.");
+      return;
+    }
 
     const rawCard = onlyDigits(form.cardNumber);
 
@@ -121,8 +130,21 @@ const PaymentModal = ({
       return;
     }
 
-    setIsSuccess(true);
-    onPaymentSuccess();
+    // setIsSuccess(true);
+    // onPaymentSuccess();
+
+    try {
+      setIsSubmitting(true);
+
+      await api.purchaseCourse(courseId, rawCard);
+
+      setIsSuccess(true);
+      onPaymentSuccess();
+    } catch (err) {
+      setError(err.message || "Payment failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -197,9 +219,11 @@ const PaymentModal = ({
               <button
                 type="submit"
                 className={cl.payBtn}
-                disabled={!isFormFilled}
+                // disabled={!isFormFilled}
+                disabled={!isFormFilled || isSubmitting || !courseId}
               >
-                Pay Now
+                {/*Pay Now*/}
+                {isSubmitting ? "Processing..." : "Pay Now"}
               </button>
             </form>
           </>

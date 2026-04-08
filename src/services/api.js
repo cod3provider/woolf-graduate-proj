@@ -75,4 +75,13 @@ export const api = {
 
   getFullLesson: (courseSlug, lessonSlug) =>
     fetchWithAuth(`/courses/${courseSlug}/lessons/${lessonSlug}`),
+
+  purchaseCourse: (courseId, cardNumber) =>
+    fetchWithAuth("/payments/purchase", {
+      method: "POST",
+      body: JSON.stringify({
+        course_id: courseId,
+        card_number: cardNumber,
+      }),
+    }),
 };

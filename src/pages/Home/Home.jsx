@@ -224,6 +224,7 @@ const Home = () => {
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
         onPaymentSuccess={grantProAccess}
+        courseId={firstCourse?.id}
       />
     </Container>
   );
