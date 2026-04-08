@@ -117,7 +117,7 @@ const LessonManager = ({ course, onBack }) => {
       <div className={cl.courseGrid}>
         {lessons.length === 0 && <p className={cl.emptyState}>You haven't lessons. Create first lesson!</p>}
 
-        {lessons.map(lesson => (
+        {lessons.map((lesson, index) => (
           <div key={lesson.id} className={cl.courseCard}>
             {editingMetaId === lesson.id ? (
               <div className={cl.courseInfo}>
@@ -142,7 +142,8 @@ const LessonManager = ({ course, onBack }) => {
               </div>
             ) : (
               <div className={cl.courseInfo}>
-                <strong>{lesson.order_index}. {lesson.title}</strong>
+                <span>{index + 1}.</span>
+                <strong>{lesson.title}</strong>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <p className={cl.slug}>/{lesson.slug}</p>
                   {lesson.is_free ? (
@@ -151,6 +152,7 @@ const LessonManager = ({ course, onBack }) => {
                     <span className={cl.proBadge} style={{ background: '#eee', color: '#666' }}>PRO</span>
                   )}
                 </div>
+                <span>ID: {lesson.id}</span>
               </div>
             )}
             <div className={cl.actions}>

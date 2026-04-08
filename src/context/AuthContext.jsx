@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }) => {
   const logOut = async () => {
     try {
       await signOut(auth);
+      setUser(null);
       window.location.reload(); // Чистим состояние при выходе
     } catch (error) {
       console.error("Logout error:", error);

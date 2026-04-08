@@ -94,8 +94,9 @@ const CourseSidebar = ({
       </div>
 
       <ul className={cl.lessonList}>
-        {lessons.map((lesson) => {
+        {lessons.map((lesson, index) => {
           const isLocked = !lesson.is_free && !hasProAccess;
+          const displayOrder = index + 1;
 
           return (
             <li
@@ -122,7 +123,8 @@ const CourseSidebar = ({
                 </span>
 
                 <span>
-                  {lesson.number || String(lesson.id).padStart(2, "0")}.{" "}
+                  {displayOrder}.
+                  {/*{lesson.number || String(lesson.id).padStart(2, "0")}.{" "}*/}
                   {lesson.title}
                 </span>
               </div>
