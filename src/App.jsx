@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./App.css";
 import SharedLayout from "./components/common/SharedLayout/SharedLayout.jsx";
 import AuthModal from "./components/auth/AuthModal/AuthModal.jsx";
+import AdminFloatingButton from "@components/AdminFloatingButton/AdminFloatingButton.jsx";
 
 function App({children}) {
   const location = useLocation();
@@ -21,6 +22,8 @@ function App({children}) {
 
         {children}
       <AuthModal />
+
+      <AdminFloatingButton />
     </Suspense>
   )
 }
