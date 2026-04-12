@@ -1,0 +1,41 @@
+.floatingBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*padding: 20px;*/
+  text-decoration: none;
+  background-color: #f4af25;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.floatingBtn:hover {
+  width: 180px;
+  border-radius: 30px;
+  background-color: #e29e1d;
+  overflow: hidden;
+}
+
+.btnText {
+  display: none;
+  margin-left: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.floatingBtn:hover .btnText {
+  display: inline;
+}
+
+.floatingBtn svg {
+  font-size: 24px;
+}
