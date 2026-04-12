@@ -70,18 +70,21 @@ const LessonManager = ({ course, onBack }) => {
 
   return (
     <div className={cl.managerContainer}>
-      <header className={cl.adminHeader}>
-        <button onClick={onBack} className={cl.ghostBtn}>
-          <FaArrowLeft /> To courses
-        </button>
-        <h2>Lessons of course: {course.title}</h2>
-        <button
-          onClick={() => setIsAddingLesson(!isAddingLesson)}
-          className={cl.addBtn}
-        >
-          <FaPlus /> {isAddingLesson ? "Cancel" : "Add lesson"}
-        </button>
-      </header>
+      <div className={cl.adminHeader}>
+        <h2 className={cl.title}>Lessons of course: {course.title}</h2>
+
+        <div className={cl.buttonsWrapper}>
+          <button onClick={onBack} className={`${cl.ghostBtn} ${cl.button}`}>
+            <FaArrowLeft /> To courses
+          </button>
+          <button
+            onClick={() => setIsAddingLesson(!isAddingLesson)}
+            className={`${cl.addBtn}  ${cl.button}`}
+          >
+            <FaPlus /> {isAddingLesson ? "Cancel" : "Add lesson"}
+          </button>
+        </div>
+      </div>
 
       {isAddingLesson && (
         <form onSubmit={handleCreateLesson} className={cl.createForm}>
@@ -142,8 +145,13 @@ const LessonManager = ({ course, onBack }) => {
               </div>
             ) : (
               <div className={cl.courseInfo}>
-                <span>{index + 1}.</span>
-                <strong>{lesson.title}</strong>
+                <strong>
+                  <span>
+                    {index + 1}.
+                  </span>
+                  {lesson.title}
+                </strong>
+
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <p className={cl.slug}>/{lesson.slug}</p>
                   {lesson.is_free ? (
