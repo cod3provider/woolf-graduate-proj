@@ -38,16 +38,21 @@ const FillMissingLineSection = ({
       <p className={cl.sectionText}>{description}</p>
 
       <div className={cl.tasksList}>
-        {tasks.map((task) => {
+        {tasks.map((task, index) => {
           const selected = selectedAnswers[task.id];
           const checked = checkedAnswers[task.id];
-          const isCorrect = selected === task.correct;
+          const correctAnswers = Array.isArray(task.correct)
+            ? task.correct
+            : [task.correct];
+          const isCorrect = correctAnswers.includes(selected);
 
           return (
             <article key={task.id} className={cl.taskCard}>
               <div className={cl.taskHeader}>
-                <span className={cl.taskNumber}>{task.id}</span>
-                <h3 className={cl.taskTitle}>Missing line #{task.id}</h3>
+                <span className={cl.taskNumber}>{index + 1}</span>
+                <h3 className={cl.taskTitle}>
+                  {task.title?.trim() || `Missing line #${index + 1}`}
+                </h3>
               </div>
 
               <div className={cl.codeWrap}>
@@ -89,18 +94,22 @@ const FillMissingLineSection = ({
                     className={`${cl.optionBtn} ${
                       selected === key ? cl.selectedOption : ""
                     } ${
-                      checked && key === task.correct ? cl.correctOption : ""
+                      checked && correctAnswers.includes(key)
+                        ? cl.correctOption
+                        : ""
                     } ${
                       checked &&
                       selected === key &&
-                      selected !== task.correct
+                      !correctAnswers.includes(selected)
                         ? cl.wrongOption
                         : ""
                     }`}
                     onClick={() => handleSelect(task.id, key)}
                   >
                     <span className={cl.optionLetter}>{key}</span>
-                    <span className={cl.optionCode}>{value}</span>
+                    <span className={cl.optionCode}>
+                      {Array.isArray(value) ? value.join("\n") : value}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -123,7 +132,7 @@ const FillMissingLineSection = ({
                   >
                     {isCorrect
                       ? "Correct!"
-                      : `Not quite. Correct answer: ${task.correct}`}
+                      : `Not quite. Correct answer: ${correctAnswers.join(", ")}`}
                   </p>
                 )}
               </div>
