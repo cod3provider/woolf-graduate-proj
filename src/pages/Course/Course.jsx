@@ -29,7 +29,10 @@ const Course = () => {
 
   const { user, loading: authLoading, openAuthModal } = useAuth();
   const { hasProAccess, grantProAccess } = useProAccess();
-  const courseId = dbLessons[0]?.course_id ?? null;
+  // const courseId = dbLessons[0]?.course_id ?? null;
+  const courseId = useMemo(() => {
+    return dbLessons.length > 0 ? dbLessons[0].course_id : null;
+  }, [dbLessons]);
   const { completedLessonIds, completeLesson } = useCourseProgress(courseId);
 
   const userInitial =
@@ -128,6 +131,16 @@ const Course = () => {
     return <div className={cl.loader}>Loading course...</div>;
   }
 
+  const handlePaymentComplete = async () => {
+    grantProAccess();
+    try {
+      const data = await api.getCourseLessonsBySlug(courseSlug);
+      setDbLessons(data);
+    } catch (err) {
+      console.error("Failed to refresh lessons after payment:", err);
+    }
+  };
+
   return (
     <section className={cl.coursePage}>
       <div
@@ -197,7 +210,9 @@ const Course = () => {
         <PaymentModal
           isOpen={isPaymentModalOpen}
           onClose={() => setIsPaymentModalOpen(false)}
-          onPaymentSuccess={grantProAccess}
+          // onPaymentSuccess={grantProAccess}
+          onPaymentSuccess={handlePaymentComplete}
+          courseId={courseId}
         />
       </div>
     </section>
